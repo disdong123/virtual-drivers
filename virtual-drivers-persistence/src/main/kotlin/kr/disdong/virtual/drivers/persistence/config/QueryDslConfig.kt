@@ -1,4 +1,4 @@
-package kr.disdong.virtual.drivers.jpa.config
+package kr.disdong.virtual.drivers.persistence.config
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager

@@ -2,8 +2,8 @@ package kr.disdong.virtual.drivers.server.module.user.service
 
 import kr.disdong.virtual.drivers.domain.module.user.model.PlainUser
 import kr.disdong.virtual.drivers.domain.module.user.repository.UserRepository
-import kr.disdong.virtual.drivers.jpa.module.user.model.UserEntity
-import kr.disdong.virtual.drivers.jpa.module.user.model.impl.UserImpl
+import kr.disdong.virtual.drivers.persistence.module.user.model.UserEntity
+import kr.disdong.virtual.drivers.persistence.module.user.model.impl.UserImpl
 import kr.disdong.virtual.drivers.server.module.user.dto.CreateUserBody
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull

@@ -1,4 +1,4 @@
-package kr.disdong.virtual.drivers.jpa.module.user.model
+package kr.disdong.virtual.drivers.persistence.module.user.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -7,8 +7,8 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import kr.disdong.virtual.drivers.domain.module.user.model.PlainUser
 import kr.disdong.virtual.drivers.domain.module.user.model.User
-import kr.disdong.virtual.drivers.jpa.common.model.BaseEntity
-import kr.disdong.virtual.drivers.jpa.module.user.model.impl.UserImpl
+import kr.disdong.virtual.drivers.persistence.common.model.BaseEntity
+import kr.disdong.virtual.drivers.persistence.module.user.model.impl.UserImpl
 
 @Entity(name = "user")
 class UserEntity(

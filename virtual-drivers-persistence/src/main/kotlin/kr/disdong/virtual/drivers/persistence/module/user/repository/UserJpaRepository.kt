@@ -1,8 +1,8 @@
-package kr.disdong.virtual.drivers.jpa.module.user.repository
+package kr.disdong.virtual.drivers.persistence.module.user.repository
 
 import com.querydsl.jpa.impl.JPAQueryFactory
-import kr.disdong.virtual.drivers.jpa.module.user.model.QUserEntity
-import kr.disdong.virtual.drivers.jpa.module.user.model.UserEntity
+import kr.disdong.virtual.drivers.persistence.module.user.model.QUserEntity
+import kr.disdong.virtual.drivers.persistence.module.user.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserJpaRepository : JpaRepository<UserEntity, Long>, UserCustomJpaRepository

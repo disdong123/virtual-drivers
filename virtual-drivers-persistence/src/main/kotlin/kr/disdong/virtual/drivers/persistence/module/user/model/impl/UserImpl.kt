@@ -1,7 +1,7 @@
-package kr.disdong.virtual.drivers.jpa.module.user.model.impl
+package kr.disdong.virtual.drivers.persistence.module.user.model.impl
 
 import kr.disdong.virtual.drivers.domain.module.user.model.User
-import kr.disdong.virtual.drivers.jpa.module.user.model.UserEntity
+import kr.disdong.virtual.drivers.persistence.module.user.model.UserEntity
 
 class UserImpl(
     private val entity: UserEntity,

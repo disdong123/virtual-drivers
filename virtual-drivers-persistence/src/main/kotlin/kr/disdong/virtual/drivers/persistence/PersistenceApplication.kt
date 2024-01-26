@@ -1,6 +1,6 @@
-package kr.disdong.virtual.drivers.jpa
+package kr.disdong.virtual.drivers.persistence
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class JpaApplication
+class PersistenceApplication

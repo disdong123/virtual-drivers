@@ -1,4 +1,4 @@
-package kr.disdong.virtual.drivers.jpa.common.model
+package kr.disdong.virtual.drivers.persistence.common.model
 
 import jakarta.persistence.Column
 import jakarta.persistence.MappedSuperclass
