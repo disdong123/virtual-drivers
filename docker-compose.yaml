@@ -1,0 +1,19 @@
+services:
+  mysql:
+    container_name: virtual_drivers_mysql
+    image: mysql:8
+    ports:
+      - '3308:3306'
+    environment:
+      TZ: 'Asia/Seoul'
+      MYSQL_DATABASE: virtual_drivers
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./infra/mysql/data:/var/lib/mysql
+    networks:
+      - virtual_drivers
+
+networks:
+  virtual_drivers:
+    name: virtual_drivers
+    driver: bridge
