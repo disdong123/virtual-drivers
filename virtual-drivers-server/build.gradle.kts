@@ -1,6 +1,6 @@
 dependencies {
-    api(project(":vd-persistence"))
-    implementation(project(":vd-common"))
+    api(project(":virtual-drivers-persistence"))
+    implementation(project(":virtual-drivers-common"))
     implementation(libs.spring.boot.starter.web)
 }
 

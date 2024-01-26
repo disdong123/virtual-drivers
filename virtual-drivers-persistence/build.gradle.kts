@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":vd-domain"))
+    api(project(":virtual-drivers-domain"))
     api(libs.spring.boot.starter.data.jpa)
     api(libs.querydsl.jpa) {
         artifact {

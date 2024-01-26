@@ -1,10 +1,10 @@
 rootProject.name = "virtual-drivers"
 
 include(
-    "vd-domain",
-    "vd-persistence",
-    "vd-common",
-    "vd-server"
+    "virtual-drivers-domain",
+    "virtual-drivers-persistence",
+    "virtual-drivers-common",
+    "virtual-drivers-server"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
