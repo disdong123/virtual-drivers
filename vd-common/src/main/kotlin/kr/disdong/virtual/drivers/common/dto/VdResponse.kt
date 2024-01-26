@@ -1,18 +1,18 @@
 package kr.disdong.virtual.drivers.common.dto
 
-import kr.disdong.virtual.drivers.common.exception.TemplateException
+import kr.disdong.virtual.drivers.common.exception.VdException
 import org.springframework.http.HttpStatus
 
-class TemplateResponse<T>(
+class VdResponse<T>(
     val code: Int,
     val data: T? = null,
     val message: String? = null
 ) {
     companion object {
         fun <T> of(
-            exception: TemplateException
-        ): TemplateResponse<T> {
-            return TemplateResponse(
+            exception: VdException
+        ): VdResponse<T> {
+            return VdResponse(
                 code = exception.getCode(),
                 message = exception.message,
             )
@@ -20,8 +20,8 @@ class TemplateResponse<T>(
 
         fun <T> of(
             content: T? = null,
-        ): TemplateResponse<T> {
-            return TemplateResponse(
+        ): VdResponse<T> {
+            return VdResponse(
                 code = HttpStatus.OK.value(),
                 data = content
             )
@@ -30,8 +30,8 @@ class TemplateResponse<T>(
         fun <T> of(
             code: HttpStatus,
             content: T? = null,
-        ): TemplateResponse<T> {
-            return TemplateResponse(
+        ): VdResponse<T> {
+            return VdResponse(
                 code = code.value(),
                 data = content
             )

@@ -1,6 +1,6 @@
 package kr.disdong.virtual.drivers.server.module.user.controller
 
-import kr.disdong.virtual.drivers.common.dto.TemplateResponse
+import kr.disdong.virtual.drivers.common.dto.VdResponse
 import kr.disdong.virtual.drivers.server.module.user.controller.spec.UserSpec
 import kr.disdong.virtual.drivers.server.module.user.dto.CreateUserBody
 import kr.disdong.virtual.drivers.server.module.user.service.UserService
@@ -18,10 +18,10 @@ class UserController(
     @GetMapping("/users/{userId}")
     override fun getByUserId(
         @PathVariable userId: Long,
-    ) = TemplateResponse.of(userService.getByUserId(userId))
+    ) = VdResponse.of(userService.getByUserId(userId))
 
     @PostMapping("/users")
     override fun create(
         body: CreateUserBody,
-    ) = TemplateResponse.of(HttpStatus.CREATED, userService.create(body))
+    ) = VdResponse.of(HttpStatus.CREATED, userService.create(body))
 }
