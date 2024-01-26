@@ -1,11 +1,10 @@
-rootProject.name = "springboot-template"
+rootProject.name = "virtual-drivers"
 
 include(
-    "subp-domain",
-    "subp-jdbc",
-    "subp-jpa",
-    "subp-common",
-    "subp-server"
+    "vd-domain",
+    "vd-persistence",
+    "vd-common",
+    "vd-server"
 )
 
 enableFeaturePreview("VERSION_CATALOGS")
