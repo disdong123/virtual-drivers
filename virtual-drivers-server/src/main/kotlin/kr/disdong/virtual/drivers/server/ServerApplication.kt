@@ -8,7 +8,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-@Import(DomainApplication::class, PersistenceApplication::class, ApiClientApplication::class)
+@Import(DomainApplication::class, PersistenceApplication::class, DomainApplication::class, ApiClientApplication::class)
 class ServerApplication
 
 fun main(args: Array<String>) {

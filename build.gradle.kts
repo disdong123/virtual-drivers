@@ -37,7 +37,7 @@ subprojects {
         implementation(libs.springdoc.openapi.starter.webmvc.ui)
 
         testImplementation(libs.spring.boot.starter.test)
-        testImplementation(libs.mockk)
+        testImplementation(libs.mockito.kotlin)
         testImplementation(libs.fixture.monkey.starter.kotlin)
     }
 

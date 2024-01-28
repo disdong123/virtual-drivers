@@ -1,6 +1,7 @@
 package kr.disdong.virtual.drivers.api.client.module.drivingdirection.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import kr.disdong.virtual.drivers.common.exception.VdException
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Distance
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Duration
@@ -11,11 +12,15 @@ data class DrivingDirectionFeignResponse(
     val code: Int,
     val message: String,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
-    val currentDateTime: ZonedDateTime,
-    val route: Route,
+    val currentDateTime: ZonedDateTime?,
+    val route: Route?,
 ) {
 
     fun toDrivingDirectionResponse(): DrivingDirectionResponse {
+        if (route == null) {
+            throw InvalidDrivingDirectionResponseException(message)
+        }
+
         return DrivingDirectionResponse(
             start = Position(
                 latitude = route.trafast.first().summary.start.location.first(),
@@ -52,8 +57,8 @@ data class DrivingDirectionFeignResponse(
         data class Summary(
             val start: LocationSummary,
             val goal: LocationSummary,
-            val distance: Double,
-            val duration: Double,
+            val distance: Int,
+            val duration: Int,
             @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
             val departureTime: ZonedDateTime,
             val bbox: List<List<Double>>,
@@ -66,5 +71,13 @@ data class DrivingDirectionFeignResponse(
                 val location: List<Double>,
             )
         }
+    }
+}
+
+class InvalidDrivingDirectionResponseException(
+    message: String,
+) : VdException(message) {
+    override fun getCode(): Int {
+        return 404
     }
 }

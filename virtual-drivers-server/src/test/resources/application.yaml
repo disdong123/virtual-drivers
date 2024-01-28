@@ -1,0 +1,14 @@
+spring.config.activate.on-profile: test, default
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  config:
+    import:
+      - persistence.yaml
+      - api-client.yaml
+
+springdoc:
+  swagger-ui:
+    path: /docs
