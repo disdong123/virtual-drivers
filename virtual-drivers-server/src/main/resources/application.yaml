@@ -5,7 +5,7 @@ server:
 spring:
   config:
     import:
-      - jpa-mysql.yaml
+      - persistence.yaml
 
 springdoc:
   swagger-ui:

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserService(
     private val userRepository: UserRepository,
+//    val journeyFeignClient: JourneyFeignClient
 ) {
 
     fun getByUserId(userId: Long) =
