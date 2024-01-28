@@ -58,6 +58,10 @@ subprojects {
 
     tasks.withType<Test> {
         useJUnitPlatform()
+        // 유닛 테스트만 돌리고 싶은 경우: ./gradlew test -Punit
+        if (project.hasProperty("unit")) {
+            exclude("**/*ITest.*")
+        }
     }
 
     tasks.getByName("bootJar") {
