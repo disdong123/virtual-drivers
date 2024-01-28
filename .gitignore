@@ -38,3 +38,9 @@ out/
 
 #
 **/.jqwik-database
+
+# volume
+**/infra/mysql/data/**
+
+# application.yaml
+**/*-local.yaml

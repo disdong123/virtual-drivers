@@ -1,6 +1,7 @@
 rootProject.name = "virtual-drivers"
 
 include(
+    "virtual-drivers-api-client",
     "virtual-drivers-domain",
     "virtual-drivers-persistence",
     "virtual-drivers-common",
@@ -23,7 +24,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from("kr.disdong:spring-version-catalog:0.0.20")
+            from("kr.disdong:spring-version-catalog:0.0.25")
         }
     }
 }

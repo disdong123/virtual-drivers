@@ -1,0 +1,5 @@
+naver:
+  map:
+    client-id: p458lk2igz
+    client-secret: HKV0J04AQZsfTlkg7QH89np3ICH6MZSv2wqeb6PW
+    base-url: https://naveropenapi.apigw.ntruss.com/map-direction/v1
