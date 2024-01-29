@@ -1,16 +1,22 @@
 package kr.disdong.virtual.drivers.server.module.drivingdirection.service
 
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionClient
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
 import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingDirectionRequest
 import org.springframework.stereotype.Service
 
 @Service
 class DrivingDirectionService(
     private val drivingDirectionClient: DrivingDirectionClient,
+    private val drivingDirectionRepository: DrivingDirectionRepository,
 ) {
+    fun create(request: GetDrivingDirectionRequest): DrivingDirection {
+        val response = drivingDirectionClient.getDrivingDirection(request.toDrivingDirectionRequest())
+        return drivingDirectionRepository.save(response.toPlainDrivingDirection())
+    }
 
-    fun getDrivingDirection(request: GetDrivingDirectionRequest): DrivingDirectionResponse {
-        return drivingDirectionClient.getDrivingDirection(request.toDrivingDirectionRequest())
+    fun getOneById(id: Long): DrivingDirection {
+        return drivingDirectionRepository.findById(id)
     }
 }

@@ -9,12 +9,8 @@ class UserImpl(
 
     override val id: Long
         get() = entity.id
-    override var name: String = entity.name
+    override val name: String
         get() = entity.name
     override val phone: String
         get() = entity.phone
-
-    override fun updateName(name: String) {
-        entity.name = name
-    }
 }

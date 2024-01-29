@@ -2,12 +2,10 @@ package kr.disdong.virtual.drivers.domain.module.user.model
 
 interface PlainUser : UserData
 
-interface User : UserData {
-    fun updateName(name: String)
-}
+interface User : UserData
 
 interface UserData {
     val id: Long
-    var name: String
+    val name: String
     val phone: String
 }

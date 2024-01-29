@@ -1,9 +1,8 @@
 package kr.disdong.virtual.drivers.server.module.drivingdirection.dto
 
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionRequest
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionApiRequest
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
-import java.time.ZonedDateTime
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 data class GetDrivingDirectionRequest(
     val startLatitude: Double,
     val startLongitude: Double,
@@ -11,7 +10,7 @@ data class GetDrivingDirectionRequest(
     val goalLongitude: Double,
 ) {
 
-    fun toDrivingDirectionRequest() = DrivingDirectionRequest(
+    fun toDrivingDirectionRequest() = DrivingDirectionApiRequest(
         start = Position(
             latitude = startLatitude,
             longitude = startLongitude,
@@ -28,19 +27,17 @@ data class GetDrivingDirectionResponse(
     val goal: Position,
     val distance: Int,
     val duration: Int,
-    val departureTime: ZonedDateTime,
     val route: List<Position>,
 ) {
 
     companion object {
 
-        fun from(response: DrivingDirectionResponse): GetDrivingDirectionResponse {
+        fun from(response: DrivingDirection): GetDrivingDirectionResponse {
             return GetDrivingDirectionResponse(
-                start = response.start,
-                goal = response.goal,
-                distance = response.distance.value,
-                duration = response.duration.value,
-                departureTime = response.departureTime,
+                start = response.startPosition,
+                goal = response.startPosition,
+                distance = response.distance,
+                duration = response.duration,
                 route = response.route,
             )
         }

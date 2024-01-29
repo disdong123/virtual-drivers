@@ -1,6 +1,6 @@
 package kr.disdong.virtual.drivers.api.client.module.drivingdirection.client.impl
 
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionRequest
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionApiRequest
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Disabled
@@ -21,7 +21,7 @@ class DrivingDirectionClientImplITest {
         assertNotNull(sut)
         println(
             sut.getDrivingDirection(
-                request = DrivingDirectionRequest(
+                request = DrivingDirectionApiRequest(
                     start = Position(
                         longitude = 126.9918,
                         latitude = 37.5519

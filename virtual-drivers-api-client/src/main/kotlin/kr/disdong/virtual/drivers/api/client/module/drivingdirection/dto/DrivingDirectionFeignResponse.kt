@@ -3,7 +3,7 @@ package kr.disdong.virtual.drivers.api.client.module.drivingdirection.dto
 import com.fasterxml.jackson.annotation.JsonFormat
 import kr.disdong.virtual.drivers.common.exception.VdException
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Distance
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionApiResponse
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Duration
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import java.time.ZonedDateTime
@@ -16,12 +16,12 @@ data class DrivingDirectionFeignResponse(
     val route: Route?,
 ) {
 
-    fun toDrivingDirectionResponse(): DrivingDirectionResponse {
+    fun toDrivingDirectionResponse(): DrivingDirectionApiResponse {
         if (route == null) {
             throw InvalidDrivingDirectionResponseException(message)
         }
 
-        return DrivingDirectionResponse(
+        return DrivingDirectionApiResponse(
             start = Position(
                 latitude = route.trafast.first().summary.start.location.first(),
                 longitude = route.trafast.first().summary.start.location.last(),

@@ -1,6 +1,6 @@
 package kr.disdong.virtual.drivers.server.module.drivingdirection.service
 
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 import kr.disdong.virtual.drivers.server.common.IntegrationTest
 import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingDirectionRequest
 import org.junit.jupiter.api.Assertions.assertInstanceOf
@@ -18,9 +18,9 @@ class DrivingDirectionServiceITest : IntegrationTest() {
         val request = GetDrivingDirectionRequest(37.001, 127.001, 37.001, 127.001)
 
         // when
-        val response = sut.getDrivingDirection(request)
+        val response = sut.create(request)
 
         // then
-        assertInstanceOf(DrivingDirectionResponse::class.java, response)
+        assertInstanceOf(DrivingDirection::class.java, response)
     }
 }

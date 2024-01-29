@@ -19,6 +19,6 @@ class DrivingDirectionController(
     fun getDrivingDirection(
         @ModelAttribute request: GetDrivingDirectionRequest,
     ): VdResponse<GetDrivingDirectionResponse> {
-        return VdResponse.of(GetDrivingDirectionResponse.from(drivingDirectionService.getDrivingDirection(request)))
+        return VdResponse.of(GetDrivingDirectionResponse.from(drivingDirectionService.create(request)))
     }
 }

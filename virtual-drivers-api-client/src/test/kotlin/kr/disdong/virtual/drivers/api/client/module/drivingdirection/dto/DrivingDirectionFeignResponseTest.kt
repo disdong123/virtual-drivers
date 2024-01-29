@@ -3,7 +3,7 @@ package kr.disdong.virtual.drivers.api.client.module.drivingdirection.dto
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionResponse
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionApiResponse
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 
@@ -21,7 +21,7 @@ class DrivingDirectionFeignResponseTest {
     fun `toDrivingDirectionResponse 메서드는 DrivingDirectionResponse 인스턴스를 만든다`() {
         val response = objectMapper.readValue(ResponseExample.json, DrivingDirectionFeignResponse::class.java)
 
-        assertInstanceOf(DrivingDirectionResponse::class.java, response.toDrivingDirectionResponse())
+        assertInstanceOf(DrivingDirectionApiResponse::class.java, response.toDrivingDirectionResponse())
     }
 }
 
