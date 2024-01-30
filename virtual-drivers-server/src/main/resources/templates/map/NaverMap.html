@@ -1,15 +1,142 @@
 <html>
-    <body>
-        <h1>지도 테스트</h1>
-        <div id="map" style="width:100%;height:400px;"></div>
-    </body>
-    <script type="text/javascript" th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapClientId}}" ></script>
-    <script>
-        var mapOptions = {
-            center: new naver.maps.LatLng(37.3595704, 127.105399),
-            zoom: 10
-        };
+<head>
+    <style>
+        .container {
+            display: flex;
+            margin: 0 5% 0 0; /* 오른쪽 여백 제거, 왼쪽 여백 5% */
+        }
+        .address-inputs {
+            flex: 0 0 30%; /* 너비 30% 고정 */
+            padding: 10px;
+            margin-left: 5%; /* 왼쪽 여백 5% */
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .address-inputs input {
+            width: 70%; /* 입력 필드 너비 */
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .address-inputs label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .address-row {
+            margin-bottom: 10px;
+        }
+        .map-container {
+            flex: 0 0 70%; /* 너비 70% 고정 */
+            padding: 10px;
+        }
+        .search_button {
+            float: none;
+            position: static;
+            margin-left: 5px;
+            width: 48px !important;
+            height: 21px !important;
+            border: 1px solid #49494b;
+            background: #49494b;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+</head>
+<body>
+<h1>지도 테스트</h1>
 
-        var map = new naver.maps.Map('map', mapOptions);
-    </script>
+<div class="container">
+    <!-- 주소 입력 부분 -->
+    <div class="address-inputs">
+        <div id="postcodify"></div>
+        <div class="address-row">
+            <label for="postcode">우편번호:</label>
+            <input type="text" id="postcode" value="" />
+        </div>
+        <div class="address-row">
+            <label for="address">주소:</label>
+            <input type="text" id="address" value="" />
+        </div>
+        <div class="address-row">
+            <label for="address_detail">상세 주소:</label>
+            <input type="text" id="address_detail" value="" />
+        </div>
+        <div class="address-row">
+            <label for="extra_info">추가 정보:</label>
+            <input type="text" id="extra_info" value="" />
+        </div>
+    </div>
+
+    <!-- 지도 부분 -->
+    <div class="map-container">
+        <div id="map" style="width:100%;height:400px;"></div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapProperties.clientId}}"></script>
+<script th:inline="javascript">
+    const mapOptions = {
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10
+    };
+
+    const map = new naver.maps.Map('map', mapOptions);
+
+    fetch("http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563", {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+    }).then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error))
+
+    $(function() {
+        $("#postcodify").postcodify({
+            insertPostcode5 : "#postcode",
+            insertAddress : "#address",
+            insertDetails : "#address_detail",
+            insertExtraInfo : "#extra_info",
+            hideOldAddresses : false,
+            beforeSearch : function(data) {
+                $("#entry_box").hide();
+            },
+            afterSelect: function(data) {
+                $("#postcodify div.postcode_search_result").remove();
+                $("#postcodify div.postcode_search_status.summary").hide();
+                const address = {
+                    address: $("#address").val(),
+                    addressDetail: $("#address_detail").val(),
+                }
+                console.log([[${naverMapProperties.clientId}]])
+                console.log([[${naverMapProperties.clientSecret}]])
+                fetch("http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563", {
+                    method: "GET",
+                    mode: "cors",
+                    cache: "no-cache",
+                }).then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+                // fetch("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode", {
+                //     method: "GET",
+                //     mode: "cors",
+                //     cache: "no-cache",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         "X-NCP-APIGW-API-KEY-ID": [[${naverMapProperties.clientId}]],
+                //         "X-NCP-APIGW-API-KEY": [[${naverMapProperties.clientSecret}]],
+                //     }
+                // }).then(response => response.json())
+                //     .then(data => console.log(data))
+                //     .catch(error => console.log(error))
+            },
+        });
+    });
+
+</script>
+</body>
 </html>

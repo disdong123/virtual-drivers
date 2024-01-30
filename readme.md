@@ -15,3 +15,8 @@ flowchart TB
   JdbcRepository ---|Entity| Database
   SomeRepository -.-|Entity| Database
 ```
+
+### 참고
+- postcodify: https://www.poesis.org/postcodify/guide/jquery_plugin
+- directions 5: https://guide.ncloud-docs.com/docs/maps-direction5-api
+- geolocation: https://www.ncloud.com/product/applicationService/geoLocation

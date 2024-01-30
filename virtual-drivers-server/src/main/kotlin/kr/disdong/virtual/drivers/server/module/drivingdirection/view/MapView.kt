@@ -16,17 +16,8 @@ class MapView(
     fun map(
         model: Model
     ): String {
-        model.addAttribute("naverMapClientId", naverMapProperties.clientId)
+        println(naverMapProperties.clientId)
+        model.addAttribute("naverMapProperties", naverMapProperties)
         return "map/NaverMap"
-    }
-
-    @GetMapping("/map/driving-direction")
-    fun drivingDirectionOnMap(
-        model: Model,
-    ): String {
-        val dd = drivingDirectionService.getOneById(1)
-        model.addAttribute("naverMapClientId", naverMapProperties.clientId)
-        model.addAttribute("drivingDirection", dd.route)
-        return "map/DrivingDirectionOnNaverMap"
     }
 }
