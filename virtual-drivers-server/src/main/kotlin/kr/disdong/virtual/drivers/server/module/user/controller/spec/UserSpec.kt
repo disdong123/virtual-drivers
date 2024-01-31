@@ -10,8 +10,5 @@ import kr.disdong.virtual.drivers.server.module.user.dto.CreateUserBody
 interface UserSpec {
 
     @Operation
-    fun getByUserId(userId: Long): VdResponse<User>
-
-    @Operation
     fun create(body: CreateUserBody): VdResponse<User>
 }

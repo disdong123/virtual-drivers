@@ -11,9 +11,6 @@ import org.springframework.stereotype.Repository
 class UserRepositoryImpl(
     private val userJpaRepository: UserJpaRepository
 ) : UserRepository {
-    override fun findByUserId(userId: Long): User? {
-        return userJpaRepository.findByUserId(userId)?.toUser()
-    }
 
     override fun save(user: PlainUser): User {
         return userJpaRepository.save(UserEntity.of(user)).toUser()

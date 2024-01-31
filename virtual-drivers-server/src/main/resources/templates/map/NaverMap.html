@@ -87,14 +87,6 @@
 
     const map = new naver.maps.Map('map', mapOptions);
 
-    fetch("http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563", {
-        method: "GET",
-        mode: "cors",
-        cache: "no-cache",
-    }).then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
-
     $(function() {
         $("#postcodify").postcodify({
             insertPostcode5 : "#postcode",
@@ -114,25 +106,27 @@
                 }
                 console.log([[${naverMapProperties.clientId}]])
                 console.log([[${naverMapProperties.clientSecret}]])
-                fetch("http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563", {
+                console.log(address)
+
+                fetch(`http://localhost:8080/api/driving-direction/position-test?address=${address.address}`, {
                     method: "GET",
                     mode: "cors",
                     cache: "no-cache",
                 }).then(response => response.json())
-                    .then(data => console.log(data))
+                    .then(data => {
+                        if(data.code !== 200) {
+                            console.log(data.message)
+                            return
+                        }
+
+                        new naver.maps.Marker({
+                            position: new naver.maps.LatLng(data.data.latitude, data.data.longitude),
+                            map: map
+                        })
+
+                        map.setCenter(new naver.maps.LatLng(data.data.latitude, data.data.longitude))
+                    })
                     .catch(error => console.log(error))
-                // fetch("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode", {
-                //     method: "GET",
-                //     mode: "cors",
-                //     cache: "no-cache",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //         "X-NCP-APIGW-API-KEY-ID": [[${naverMapProperties.clientId}]],
-                //         "X-NCP-APIGW-API-KEY": [[${naverMapProperties.clientSecret}]],
-                //     }
-                // }).then(response => response.json())
-                //     .then(data => console.log(data))
-                //     .catch(error => console.log(error))
             },
         });
     });

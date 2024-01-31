@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 
-@FeignClient(name = "DrivingDirectionFeignClient", url = "\${naver.map.base-url}", configuration = [NaverMapFeignConfig::class])
+@FeignClient(name = "DrivingDirectionFeignClient", url = "\${naver.map.base-url}/map-direction/v1", configuration = [NaverMapFeignConfig::class])
 interface DrivingDirectionFeignClient {
 
     @GetMapping("/driving")

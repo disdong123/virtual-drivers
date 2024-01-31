@@ -5,6 +5,7 @@ import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 
+@Suppress("UNCHECKED_CAST")
 @Converter
 class DrivingDirectionRouteConverter(
     private val objectMapper: ObjectMapper,

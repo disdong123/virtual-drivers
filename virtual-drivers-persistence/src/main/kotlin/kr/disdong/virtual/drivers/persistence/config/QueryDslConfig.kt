@@ -7,11 +7,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class QueryDslConfig(
-    // @Autowired
-    // @PersistenceContext
-    // private var entityManager: EntityManager
-) {
+class QueryDslConfig {
 
     @Autowired
     private lateinit var entityManager: EntityManager

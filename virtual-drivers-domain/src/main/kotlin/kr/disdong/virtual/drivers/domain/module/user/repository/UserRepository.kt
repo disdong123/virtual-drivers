@@ -5,7 +5,5 @@ import kr.disdong.virtual.drivers.domain.module.user.model.User
 
 interface UserRepository {
 
-    fun findByUserId(userId: Long): User?
-
     fun save(user: PlainUser): User
 }

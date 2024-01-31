@@ -5,23 +5,23 @@ import kr.disdong.virtual.drivers.persistence.module.user.model.QUserEntity
 import kr.disdong.virtual.drivers.persistence.module.user.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface UserJpaRepository : JpaRepository<UserEntity, Long>, UserCustomJpaRepository
+interface UserJpaRepository : JpaRepository<UserEntity, Long>
 
 interface UserCustomJpaRepository {
-    fun findByUserId(id: Long): UserEntity?
+    fun findByName(name: String): UserEntity?
 }
 
-class UserJpaRepositoryImpl(
+class UserCustomJpaRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : UserCustomJpaRepository {
 
     private val userEntity = QUserEntity.userEntity
-    override fun findByUserId(id: Long): UserEntity? {
+    override fun findByName(name: String): UserEntity? {
         return jpaQueryFactory
             .selectFrom(userEntity)
             .where(
-                userEntity.id.eq(id),
-                userEntity.isDeleted.isFalse
+                userEntity.name.eq(name),
+                userEntity.isDeleted.isFalse,
             )
             .fetchOne()
     }
