@@ -3,3 +3,7 @@ GET http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLat
 
 ### failure case
 GET http://localhost:8080/api/driving-direction?startLatitude=127.001&startLongitude=37.001&goalLatitude=127.001&goalLongitude=37.001
+
+
+### failure case (too long)
+GET http://localhost:8080/api/driving-direction?startLatitude=35.0577598&startLongitude=127.9611632&goalLatitude=35.0873476&goalLongitude=128.903168

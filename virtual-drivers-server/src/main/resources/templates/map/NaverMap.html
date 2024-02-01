@@ -1,6 +1,9 @@
 <html>
 <head>
     <style>
+        .keyword_label {
+            display: none;
+        }
         .container {
             display: flex;
             margin: 0 5% 0 0; /* 오른쪽 여백 제거, 왼쪽 여백 5% */
@@ -13,7 +16,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .address-inputs input {
+        .address-inputs input, .address-inputs div {
             width: 70%; /* 입력 필드 너비 */
             padding: 8px;
             margin: 5px 0;
@@ -25,6 +28,8 @@
             font-weight: bold;
         }
         .address-row {
+            display: flex;
+            align-items: center;
             margin-bottom: 10px;
         }
         .map-container {
@@ -53,22 +58,18 @@
 <div class="container">
     <!-- 주소 입력 부분 -->
     <div class="address-inputs">
-        <div id="postcodify"></div>
-        <div class="address-row">
-            <label for="postcode">우편번호:</label>
-            <input type="text" id="postcode" value="" />
+        <div>
+            <div>출발지</div>
+            <div id="start_address_search"></div>
+            <div id="start_address"></div>
         </div>
-        <div class="address-row">
-            <label for="address">주소:</label>
-            <input type="text" id="address" value="" />
+        <div>
+            <div>도착지:</div>
+            <div id="goal_address_search"></div>
+            <div id="goal_address"></div>
         </div>
-        <div class="address-row">
-            <label for="address_detail">상세 주소:</label>
-            <input type="text" id="address_detail" value="" />
-        </div>
-        <div class="address-row">
-            <label for="extra_info">추가 정보:</label>
-            <input type="text" id="extra_info" value="" />
+        <div>
+            <button id="direction_button" class="search_button">경로검색</button>
         </div>
     </div>
 
@@ -80,57 +81,99 @@
 
 <script type="text/javascript" th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapProperties.clientId}}"></script>
 <script th:inline="javascript">
-    const mapOptions = {
+    const map = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(37.3595704, 127.105399),
         zoom: 10
-    };
+    });
 
-    const map = new naver.maps.Map('map', mapOptions);
+    let startPosition = null;
+    let goalPosition = null;
 
     $(function() {
-        $("#postcodify").postcodify({
-            insertPostcode5 : "#postcode",
-            insertAddress : "#address",
-            insertDetails : "#address_detail",
-            insertExtraInfo : "#extra_info",
-            hideOldAddresses : false,
+        searchAddress(
+            "#start_address_search",
+            "#start_address",
+          "start",
+        )
+        searchAddress(
+            "#goal_address_search",
+            "#goal_address",
+          "goal"
+        )
+    });
+
+    $("#direction_button").on("click", () => {
+        if(startPosition === null || goalPosition === null) {
+            alert("출발지와 도착지를 입력해주세요.")
+            return
+        }
+
+        fetch(`http://localhost:8080/api/driving-direction?startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&goalLatitude=${goalPosition.latitude}&goalLongitude=${goalPosition.longitude}`, {
+            method: "GET",
+        }).then(response => response.json())
+          .then(data => {
+              if (data.code !== 200) {
+                  console.log(data.message)
+                  return
+              }
+
+              console.log(data.data)
+          })
+    })
+
+    const searchAddress = (
+        searchTagId,
+        textTagId,
+        type,
+    ) => {
+        $(searchTagId).postcodify({
             beforeSearch : function(data) {
                 $("#entry_box").hide();
             },
             afterSelect: function(data) {
-                $("#postcodify div.postcode_search_result").remove();
-                $("#postcodify div.postcode_search_status.summary").hide();
-                const address = {
-                    address: $("#address").val(),
-                    addressDetail: $("#address_detail").val(),
-                }
-                console.log([[${naverMapProperties.clientId}]])
-                console.log([[${naverMapProperties.clientSecret}]])
-                console.log(address)
+                $(`${searchTagId} div.postcode_search_result`).remove();
+                $(`${searchTagId} div.postcode_search_status.summary`).hide();
+                $(textTagId).text(data.prevObject.context.innerText)
 
-                fetch(`http://localhost:8080/api/driving-direction/position-test?address=${address.address}`, {
-                    method: "GET",
-                    mode: "cors",
-                    cache: "no-cache",
-                }).then(response => response.json())
-                    .then(data => {
-                        if(data.code !== 200) {
-                            console.log(data.message)
-                            return
-                        }
-
-                        new naver.maps.Marker({
-                            position: new naver.maps.LatLng(data.data.latitude, data.data.longitude),
-                            map: map
-                        })
-
-                        map.setCenter(new naver.maps.LatLng(data.data.latitude, data.data.longitude))
-                    })
-                    .catch(error => console.log(error))
+                setCenterOnMap(data.prevObject.context.innerText, type)
             },
         });
-    });
+    }
 
+    const setCenterOnMap = (address, type) => {
+        fetch(`http://localhost:8080/api/driving-direction/position-test?address=${address}`, {
+            method: "GET",
+        }).then(response => response.json())
+            .then(data => {
+                if(data.code !== 200) {
+                    console.log(data.message)
+                    return
+                }
+
+                new naver.maps.Marker({
+                    position: new naver.maps.LatLng(data.data.latitude, data.data.longitude),
+                    map: map
+                })
+
+                map.setCenter(new naver.maps.LatLng(data.data.latitude, data.data.longitude))
+
+                switch (type) {
+                    case "start":
+                        startPosition = {
+                            latitude: data.data.latitude,
+                            longitude: data.data.longitude,
+                        };
+                        break
+                    case "goal":
+                        goalPosition = {
+                            latitude: data.data.latitude,
+                            longitude: data.data.longitude,
+                        };
+                        break
+                }
+            })
+            .catch(error => console.log(error))
+    }
 </script>
 </body>
 </html>

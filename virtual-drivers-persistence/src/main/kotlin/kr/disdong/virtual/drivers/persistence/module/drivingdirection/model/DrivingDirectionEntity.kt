@@ -74,7 +74,7 @@ class DrivingDirectionEntity(
         unique = false,
         columnDefinition = "TEXT"
     )
-    val route: List<Position>,
+    val route: List<Position> = listOf(),
 
     @Column(
         nullable = false,
@@ -93,7 +93,7 @@ class DrivingDirectionEntity(
                 endAt = drivingDirection.endAt,
                 distance = drivingDirection.distance,
                 duration = drivingDirection.duration,
-                route = drivingDirection.route,
+                // route = drivingDirection.route,
                 carId = drivingDirection.carId,
             )
         }
