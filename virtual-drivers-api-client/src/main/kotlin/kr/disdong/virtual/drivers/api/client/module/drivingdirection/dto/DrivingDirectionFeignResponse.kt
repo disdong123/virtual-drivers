@@ -21,26 +21,27 @@ data class DrivingDirectionFeignResponse(
             throw InvalidDrivingDirectionResponseException(message)
         }
 
+        val routeData = route.trafast.first()
         return DrivingDirectionApiResponse(
-            start = Position(
-                latitude = route.trafast.first().summary.start.location.first(),
-                longitude = route.trafast.first().summary.start.location.last(),
+            startPosition = Position(
+                latitude = routeData.summary.start.location.last(),
+                longitude = routeData.summary.start.location.first(),
             ),
-            goal = Position(
-                latitude = route.trafast.first().summary.goal.location.first(),
-                longitude = route.trafast.first().summary.goal.location.last(),
+            endPosition = Position(
+                latitude = routeData.summary.goal.location.last(),
+                longitude = routeData.summary.goal.location.first(),
             ),
             distance = Distance(
-                value = route.trafast.first().summary.distance.toInt(),
+                value = routeData.summary.distance,
             ),
             duration = Duration(
-                value = route.trafast.first().summary.duration.toInt(),
+                value = routeData.summary.duration,
             ),
-            departureTime = route.trafast.first().summary.departureTime,
-            route = route.trafast.first().path.map {
+            departureTime = routeData.summary.departureTime,
+            route = routeData.path.map {
                 Position(
-                    latitude = it.first(),
-                    longitude = it.last(),
+                    latitude = it.last(),
+                    longitude = it.first(),
                 )
             },
         )

@@ -10,12 +10,16 @@ class DrivingDirectionImpl(
 ) : DrivingDirection {
     override val id: Long
         get() = entity.id
+    override val startAddress: String
+        get() = entity.startAddress
     override val startPosition: Position
         get() = Position(entity.startLatitude, entity.startLongitude)
     override val endPosition: Position
         get() = Position(entity.endLatitude, entity.endLongitude)
     override val startAt: ZonedDateTime
         get() = entity.startAt
+    override val endAddress: String
+        get() = entity.endAddress
     override val endAt: ZonedDateTime
         get() = entity.endAt
     override val distance: Int

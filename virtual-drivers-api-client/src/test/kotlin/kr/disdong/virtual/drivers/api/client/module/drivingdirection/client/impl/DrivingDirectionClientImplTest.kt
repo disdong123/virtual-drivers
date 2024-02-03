@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 @ActiveProfiles("local")
 @Disabled
-class DrivingDirectionClientImplITest {
+class DrivingDirectionClientImplTest {
     @Autowired
     private lateinit var sut: DrivingDirectionClientImpl
 
@@ -22,11 +22,11 @@ class DrivingDirectionClientImplITest {
         println(
             sut.getDrivingDirection(
                 request = DrivingDirectionApiRequest(
-                    start = Position(
+                    startPosition = Position(
                         longitude = 126.9918,
                         latitude = 37.5519
                     ),
-                    goal = Position(
+                    endPosition = Position(
                         longitude = 126.7052,
                         latitude = 37.4563
                     )

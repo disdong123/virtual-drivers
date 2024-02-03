@@ -4,27 +4,29 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingD
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 data class GetDrivingDirectionRequest(
+    val startAddress: String,
     val startLatitude: Double,
     val startLongitude: Double,
-    val goalLatitude: Double,
-    val goalLongitude: Double,
+    val endAddress: String,
+    val endLatitude: Double,
+    val endLongitude: Double,
 ) {
 
     fun toDrivingDirectionRequest() = DrivingDirectionApiRequest(
-        start = Position(
+        startPosition = Position(
             latitude = startLatitude,
             longitude = startLongitude,
         ),
-        goal = Position(
-            latitude = goalLatitude,
-            longitude = goalLongitude,
+        endPosition = Position(
+            latitude = endLatitude,
+            longitude = endLongitude,
         )
     )
 }
 
 data class GetDrivingDirectionResponse(
-    val start: Position,
-    val goal: Position,
+    val startPosition: Position,
+    val endPosition: Position,
     val distance: Int,
     val duration: Int,
     val route: List<Position>,
@@ -32,13 +34,13 @@ data class GetDrivingDirectionResponse(
 
     companion object {
 
-        fun from(response: DrivingDirection): GetDrivingDirectionResponse {
+        fun of(response: DrivingDirection, route: List<Position>): GetDrivingDirectionResponse {
             return GetDrivingDirectionResponse(
-                start = response.startPosition,
-                goal = response.startPosition,
+                startPosition = response.startPosition,
+                endPosition = response.startPosition,
                 distance = response.distance,
                 duration = response.duration,
-                route = response.route,
+                route = route,
             )
         }
     }

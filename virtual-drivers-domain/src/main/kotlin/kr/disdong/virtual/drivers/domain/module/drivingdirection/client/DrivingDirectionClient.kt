@@ -10,23 +10,25 @@ interface DrivingDirectionClient {
 }
 
 data class DrivingDirectionApiRequest(
-    val start: Position,
-    val goal: Position,
+    val startPosition: Position,
+    val endPosition: Position,
 )
 
 data class DrivingDirectionApiResponse(
-    val start: Position,
-    val goal: Position,
+    val startPosition: Position,
+    val endPosition: Position,
     val distance: Distance,
     val duration: Duration,
     val departureTime: ZonedDateTime,
     val route: List<Position>,
 ) {
 
-    fun toPlainDrivingDirection(): PlainDrivingDirection {
+    fun toPlainDrivingDirection(startAddress: String, endAddress: String): PlainDrivingDirection {
         return PlainDrivingDirectionImpl(
-            startPosition = start,
-            endPosition = goal,
+            startAddress = startAddress,
+            endAddress = endAddress,
+            startPosition = startPosition,
+            endPosition = endPosition,
             startAt = departureTime,
             endAt = departureTime.plusSeconds(duration.value.toLong()),
             distance = distance.value,

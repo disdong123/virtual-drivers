@@ -2,6 +2,7 @@ rootProject.name = "virtual-drivers"
 
 include(
     "virtual-drivers-api-client",
+    "virtual-drivers-cache",
     "virtual-drivers-domain",
     "virtual-drivers-persistence",
     "virtual-drivers-common",

@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles
 @SpringBootTest
 @ActiveProfiles("local")
 @Disabled
-class DrivingDirectionFeignClientITest {
+class DrivingDirectionFeignClientTest {
 
     @Autowired
     private lateinit var sut: DrivingDirectionFeignClient

@@ -1,0 +1,6 @@
+spring.config.activate.on-profile: test, default
+naver:
+  map:
+    client-id: empty-value
+    client-secret: empty-value
+    base-url: empty-value

@@ -9,9 +9,11 @@ interface DrivingDirection : DrivingDirectionData
 
 interface DrivingDirectionData {
     val id: Long
+    val startAddress: String
     val startPosition: Position
-    val endPosition: Position
     val startAt: ZonedDateTime
+    val endAddress: String
+    val endPosition: Position
     val endAt: ZonedDateTime
     val distance: Int
     val duration: Int

@@ -16,7 +16,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .address-inputs input, .address-inputs div {
+        .address-inputs input, .address-inputs >div {
             width: 70%; /* 입력 필드 너비 */
             padding: 8px;
             margin: 5px 0;
@@ -40,8 +40,8 @@
             float: none;
             position: static;
             margin-left: 5px;
-            width: 48px !important;
-            height: 21px !important;
+            padding: 8px 10px;
+            border-radius: 5px;
             border: 1px solid #49494b;
             background: #49494b;
             color: #fff;
@@ -65,8 +65,8 @@
         </div>
         <div>
             <div>도착지:</div>
-            <div id="goal_address_search"></div>
-            <div id="goal_address"></div>
+            <div id="end_address_search"></div>
+            <div id="end_address"></div>
         </div>
         <div>
             <button id="direction_button" class="search_button">경로검색</button>
@@ -87,7 +87,7 @@
     });
 
     let startPosition = null;
-    let goalPosition = null;
+    let endPosition = null;
 
     $(function() {
         searchAddress(
@@ -96,19 +96,23 @@
           "start",
         )
         searchAddress(
-            "#goal_address_search",
-            "#goal_address",
-          "goal"
+            "#end_address_search",
+            "#end_address",
+          "end"
         )
     });
 
     $("#direction_button").on("click", () => {
-        if(startPosition === null || goalPosition === null) {
+        if(startPosition === null || endPosition === null) {
             alert("출발지와 도착지를 입력해주세요.")
             return
         }
 
-        fetch(`http://localhost:8080/api/driving-direction?startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&goalLatitude=${goalPosition.latitude}&goalLongitude=${goalPosition.longitude}`, {
+        drawDirectionLineOnMap()
+    })
+
+    const drawDirectionLineOnMap = () => {
+        fetch(`http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`, {
             method: "GET",
         }).then(response => response.json())
           .then(data => {
@@ -117,9 +121,12 @@
                   return
               }
 
-              console.log(data.data)
+              new naver.maps.Polyline({
+                  map: map,
+                  path: data.data.route.map(route => new naver.maps.LatLng(route.latitude, route.longitude)),
+              })
           })
-    })
+    }
 
     const searchAddress = (
         searchTagId,
@@ -141,7 +148,7 @@
     }
 
     const setCenterOnMap = (address, type) => {
-        fetch(`http://localhost:8080/api/driving-direction/position-test?address=${address}`, {
+        fetch(`http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`, {
             method: "GET",
         }).then(response => response.json())
             .then(data => {
@@ -150,6 +157,7 @@
                     return
                 }
 
+                console.log(`latitude: ${data.data.latitude}, longitude: ${data.data.longitude}`)
                 new naver.maps.Marker({
                     position: new naver.maps.LatLng(data.data.latitude, data.data.longitude),
                     map: map
@@ -160,12 +168,14 @@
                 switch (type) {
                     case "start":
                         startPosition = {
+                            address: address,
                             latitude: data.data.latitude,
                             longitude: data.data.longitude,
                         };
                         break
-                    case "goal":
-                        goalPosition = {
+                    case "end":
+                        endPosition = {
+                            address: address,
                             latitude: data.data.latitude,
                             longitude: data.data.longitude,
                         };

@@ -24,6 +24,18 @@ class DrivingDirectionEntity(
         nullable = false,
         unique = false,
     )
+    val startAddress: String,
+
+    @Column(
+        nullable = false,
+        unique = false,
+    )
+    val endAddress: String,
+
+    @Column(
+        nullable = false,
+        unique = false,
+    )
     val startLatitude: Double,
 
     @Column(
@@ -85,6 +97,8 @@ class DrivingDirectionEntity(
     companion object {
         fun of(drivingDirection: PlainDrivingDirection): DrivingDirectionEntity {
             return DrivingDirectionEntity(
+                startAddress = drivingDirection.startAddress,
+                endAddress = drivingDirection.endAddress,
                 startLatitude = drivingDirection.startPosition.latitude,
                 startLongitude = drivingDirection.startPosition.longitude,
                 endLatitude = drivingDirection.endPosition.latitude,

@@ -1,6 +1,7 @@
 package kr.disdong.virtual.drivers.server
 
 import kr.disdong.virtual.drivers.api.client.ApiClientApplication
+import kr.disdong.virtual.drivers.cache.CacheApplication
 import kr.disdong.virtual.drivers.domain.DomainApplication
 import kr.disdong.virtual.drivers.domain.module.car.repository.CarRepository
 import kr.disdong.virtual.drivers.domain.module.user.repository.UserRepository
@@ -12,7 +13,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-@Import(DomainApplication::class, PersistenceApplication::class, DomainApplication::class, ApiClientApplication::class)
+@Import(DomainApplication::class, PersistenceApplication::class, DomainApplication::class, ApiClientApplication::class, CacheApplication::class)
 class ServerApplication(
     private val userRepository: UserRepository,
     private val carRepository: CarRepository,

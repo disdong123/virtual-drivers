@@ -18,20 +18,24 @@ interface GeocodeFeignClient {
 
 data class GeocodeResponse(
     val status: GeocodeStatus,
-    val addresses: List<Address>?,
+    val addresses: List<GeocodeAddress>?,
 ) {
     fun isSuccess(): Boolean {
         return status == GeocodeStatus.OK
     }
 
     fun toPosition(): Position {
-        return addresses?.first()?.toPosition() ?: throw GeocodeException()
+        if (addresses.isNullOrEmpty()) {
+            throw GeocodeException()
+        }
+
+        return addresses.first().toPosition()
     }
 }
 
-data class Address(
-    val x: String,
-    val y: String,
+data class GeocodeAddress(
+    val x: String, // 경도
+    val y: String, // 위도
 ) {
     fun toPosition(): Position {
         return Position(y.toDouble(), x.toDouble())

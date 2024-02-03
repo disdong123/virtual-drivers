@@ -14,8 +14,8 @@ class DrivingDirectionClientImpl(
 ) : DrivingDirectionClient {
     override fun getDrivingDirection(request: DrivingDirectionApiRequest): DrivingDirectionApiResponse {
         return drivingDirectionFeignClient.getDrivingDirection(
-            request.start.toNaverMapPosition(),
-            request.goal.toNaverMapPosition(),
+            request.startPosition.toNaverMapPosition(),
+            request.endPosition.toNaverMapPosition(),
             DrivingDirectionOption.TRAFAST.value,
         ).toDrivingDirectionResponse()
     }
