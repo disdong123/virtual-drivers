@@ -23,5 +23,8 @@ class DrivingDirectionRouteCacheImplITest : IntegrationTest() {
         sut.put(route[0], route[1], route)
         assertEquals(sut.get(route[0], route[1]), route)
         assertInstanceOf(List::class.java, sut.get(route[0], route[1]))
+
+        sut.put(Position(5.0, 6.0), Position(7.0, 8.0), listOf(Position(5.0, 6.0), Position(7.0, 8.0)))
+        assertEquals(sut.getAll().size, 2)
     }
 }

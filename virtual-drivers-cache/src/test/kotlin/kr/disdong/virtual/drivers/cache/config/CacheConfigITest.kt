@@ -19,7 +19,7 @@ class CacheConfigITest {
     fun `simple test`() {
         assertNotNull(sut)
 
-        val cache = sut.getCache("virtual-drivers-default-cache")!!
+        val cache = sut.getCache("virtual-drivers-caffeine-cache")!!
         assertNotNull(cache)
         assertNull(cache.get("hello"))
 
