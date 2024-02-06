@@ -17,6 +17,5 @@ interface DrivingDirectionData {
     val endAt: ZonedDateTime
     val distance: Int
     val duration: Int
-    val route: List<Position>
     val carId: Long
 }

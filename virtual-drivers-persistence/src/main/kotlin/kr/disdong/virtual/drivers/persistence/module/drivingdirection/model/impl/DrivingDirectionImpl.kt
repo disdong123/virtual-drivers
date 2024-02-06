@@ -26,8 +26,6 @@ class DrivingDirectionImpl(
         get() = entity.distance
     override val duration: Int
         get() = entity.duration
-    override val route: List<Position>
-        get() = entity.route
     override val carId: Long
         get() = entity.carId
 }

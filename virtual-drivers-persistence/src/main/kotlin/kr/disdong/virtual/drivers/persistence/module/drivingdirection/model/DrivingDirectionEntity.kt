@@ -1,16 +1,13 @@
 package kr.disdong.virtual.drivers.persistence.module.drivingdirection.model
 
 import jakarta.persistence.Column
-import jakarta.persistence.Convert
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirection
 import kr.disdong.virtual.drivers.persistence.common.model.BaseEntity
-import kr.disdong.virtual.drivers.persistence.module.drivingdirection.converter.DrivingDirectionRouteConverter
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.impl.DrivingDirectionImpl
 import java.time.ZonedDateTime
 
@@ -80,14 +77,6 @@ class DrivingDirectionEntity(
     )
     val duration: Int,
 
-    @Convert(converter = DrivingDirectionRouteConverter::class)
-    @Column(
-        nullable = false,
-        unique = false,
-        columnDefinition = "TEXT"
-    )
-    val route: List<Position> = listOf(),
-
     @Column(
         nullable = false,
         unique = false,
@@ -107,7 +96,6 @@ class DrivingDirectionEntity(
                 endAt = drivingDirection.endAt,
                 distance = drivingDirection.distance,
                 duration = drivingDirection.duration,
-                // route = drivingDirection.route,
                 carId = drivingDirection.carId,
             )
         }

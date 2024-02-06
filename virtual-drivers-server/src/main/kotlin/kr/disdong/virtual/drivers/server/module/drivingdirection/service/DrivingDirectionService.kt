@@ -1,5 +1,6 @@
 package kr.disdong.virtual.drivers.server.module.drivingdirection.service
 
+import jakarta.transaction.Transactional
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.DrivingDirectionRouteCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionClient
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
@@ -14,18 +15,19 @@ class DrivingDirectionService(
     private val drivingDirectionRepository: DrivingDirectionRepository,
     private val drivingDirectionRouteCache: DrivingDirectionRouteCache,
 ) {
+    @Transactional
     fun create(request: GetDrivingDirectionRequest): GetDrivingDirectionResponse {
         val response = drivingDirectionClient.getDrivingDirection(request.toDrivingDirectionRequest())
-
-        drivingDirectionRouteCache.put(response.startPosition, response.endPosition, response.route)
+        val drivingDirection = drivingDirectionRepository.save(response.toPlainDrivingDirection(request.startAddress, request.endAddress))
+        val drivingDirectionRoutes = drivingDirectionRepository.saveRoutes(response.toPlainDrivingDirectionRoutes(drivingDirection.id))
 
         return GetDrivingDirectionResponse.of(
-            drivingDirectionRepository.save(response.toPlainDrivingDirection(request.startAddress, request.endAddress)),
-            drivingDirectionRouteCache.get(response.startPosition, response.endPosition),
+            drivingDirection,
+            drivingDirectionRoutes,
         )
     }
 
-    fun getOneById(id: Long): DrivingDirection {
+    fun getOneById(id: Long): DrivingDirection? {
         return drivingDirectionRepository.findById(id)
     }
 }

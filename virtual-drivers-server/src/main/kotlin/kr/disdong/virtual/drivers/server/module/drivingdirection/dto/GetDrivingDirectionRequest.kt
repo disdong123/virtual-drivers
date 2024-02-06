@@ -3,6 +3,8 @@ package kr.disdong.virtual.drivers.server.module.drivingdirection.dto
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionApiRequest
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirectionRoute
+
 data class GetDrivingDirectionRequest(
     val startAddress: String,
     val startLatitude: Double,
@@ -34,13 +36,13 @@ data class GetDrivingDirectionResponse(
 
     companion object {
 
-        fun of(response: DrivingDirection, route: List<Position>): GetDrivingDirectionResponse {
+        fun of(response: DrivingDirection, routes: List<DrivingDirectionRoute>): GetDrivingDirectionResponse {
             return GetDrivingDirectionResponse(
                 startPosition = response.startPosition,
                 endPosition = response.startPosition,
                 distance = response.distance,
                 duration = response.duration,
-                route = route,
+                route = routes.map { it.subRoutes }.flatten(),
             )
         }
     }

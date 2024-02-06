@@ -14,6 +14,5 @@ class PlainDrivingDirectionImpl(
     override val endAt: ZonedDateTime,
     override val distance: Int,
     override val duration: Int,
-    override val route: List<Position>,
     override val carId: Long,
 ) : PlainDrivingDirection
