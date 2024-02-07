@@ -104,6 +104,8 @@
         brokerURL: 'ws://localhost:8080/api/virtual-drivers'
     });
 
+    console.log(stompClient);
+
     stompClient.onConnect = function(frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/driving-direction/position', function(greeting) {

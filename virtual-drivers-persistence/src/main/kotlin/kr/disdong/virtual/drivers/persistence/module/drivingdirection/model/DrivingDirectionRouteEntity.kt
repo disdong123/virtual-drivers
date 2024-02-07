@@ -44,11 +44,6 @@ class DrivingDirectionRouteEntity(
     }
 
     fun toDrivingDirectionRoute(): DrivingDirectionRoute {
-        return DrivingDirectionRouteImpl(
-            id = id,
-            directionId = directionId,
-            order = routeOrder,
-            subRoutes = subRoutes,
-        )
+        return DrivingDirectionRouteImpl(this)
     }
 }

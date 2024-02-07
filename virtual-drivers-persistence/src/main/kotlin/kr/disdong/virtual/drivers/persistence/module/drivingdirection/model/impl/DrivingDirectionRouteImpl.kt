@@ -2,10 +2,21 @@ package kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.imp
 
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirectionRoute
+import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.DrivingDirectionRouteEntity
 
 class DrivingDirectionRouteImpl(
-    override val id: Long,
-    override val directionId: Long,
-    override val order: Int,
+    private val entity: DrivingDirectionRouteEntity,
+) : DrivingDirectionRoute {
+    override val id: Long
+        get() = entity.id
+    override val directionId: Long
+        get() = entity.directionId
+    override val order: Int
+        get() = entity.routeOrder
     override val subRoutes: List<Position>
-) : DrivingDirectionRoute
+        get() = entity.subRoutes
+
+    override fun finish() {
+        entity.isDeleted = true
+    }
+}

@@ -2,8 +2,8 @@ package kr.disdong.virtual.drivers.server.module.drivingdirection.service
 
 import jakarta.transaction.Transactional
 import kr.disdong.virtual.drivers.domain.module.car.repository.CarRepository
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.NextPositionCache
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.NextPositionFinder
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.NextPositionInfo
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.NextPositionInfoCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionClient
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
@@ -17,7 +17,7 @@ class DrivingDirectionService(
     private val drivingDirectionClient: DrivingDirectionClient,
     private val drivingDirectionRepository: DrivingDirectionRepository,
     private val carRepository: CarRepository,
-    private val nextPositionCache: NextPositionCache,
+    private val nextPositionInfoCache: NextPositionInfoCache,
 ) {
     @Transactional
     fun create(request: GetDrivingDirectionRequest): GetDrivingDirectionResponse {
@@ -26,7 +26,7 @@ class DrivingDirectionService(
         val drivingDirection = drivingDirectionRepository.save(response.toPlainDrivingDirection(request.startAddress, request.endAddress, car.id))
         val drivingDirectionRoutes = drivingDirectionRepository.saveRoutes(response.toPlainDrivingDirectionRoutes(drivingDirection.id))
 
-        nextPositionCache.add(NextPositionFinder())
+        nextPositionInfoCache.add(NextPositionInfo(directionId = drivingDirection.id, endPosition = drivingDirectionRoutes.lastOrNull()?.subRoutes?.last() ?: response.endPosition))
 
         return GetDrivingDirectionResponse.of(
             drivingDirection,

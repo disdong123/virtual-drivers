@@ -19,4 +19,5 @@ dependencies {
     kapt(libs.jakarta.persistence.api)
     kapt(libs.jakarta.annotation.api)
     runtimeOnly(libs.mysql.connector.java)
+    implementation(libs.gson)
 }

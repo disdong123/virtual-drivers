@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 class DefaultWebSocketConfig : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(config: MessageBrokerRegistry) {
         config.enableSimpleBroker()
-        config.setApplicationDestinationPrefixes("/stomp")
+        // config.setApplicationDestinationPrefixes("/stomp")
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {

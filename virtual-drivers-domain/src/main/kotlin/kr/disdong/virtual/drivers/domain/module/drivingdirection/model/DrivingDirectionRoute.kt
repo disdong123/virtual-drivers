@@ -4,7 +4,9 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 
 interface PlainDrivingDirectionRoute : DrivingDirectionRouteData
 
-interface DrivingDirectionRoute : DrivingDirectionRouteData
+interface DrivingDirectionRoute : DrivingDirectionRouteData {
+    fun finish()
+}
 
 interface DrivingDirectionRouteData {
     val id: Long
