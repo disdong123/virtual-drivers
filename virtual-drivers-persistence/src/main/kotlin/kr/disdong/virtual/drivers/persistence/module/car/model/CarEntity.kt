@@ -25,7 +25,7 @@ class CarEntity(
     @Column(
         nullable = false,
         unique = true,
-        length = 10,
+        length = 20,
     )
     val carNumber: String,
 

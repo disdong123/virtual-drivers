@@ -1,7 +1,7 @@
 package kr.disdong.virtual.drivers.broadcast.module.drivingdirection.listener
 
 import kr.disdong.virtual.drivers.common.logger.logger
-import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.DrivingDirectionRouteCache
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.NextPositionCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.scheduling.annotation.Scheduled
@@ -26,11 +26,17 @@ class DrivingDirectionListener(
 }
 
 class NextPositionFinder(
-    private val drivingDirectionRouteCache: DrivingDirectionRouteCache,
+    private val nextPositionCache: NextPositionCache,
     private val drivingDirectionRepository: DrivingDirectionRepository,
 ) {
     fun find() {
         // drivingDirectionRouteCache.get()
+
+        // subroute order, index 조회
+        // 차량 id to order, index.
+
+        // 다음 position 조회
+        // send
     }
 }
 

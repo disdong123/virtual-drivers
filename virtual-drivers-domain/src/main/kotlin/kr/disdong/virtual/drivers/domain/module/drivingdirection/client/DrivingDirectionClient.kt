@@ -25,7 +25,7 @@ data class DrivingDirectionApiResponse(
     val route: List<Position>,
 ) {
 
-    fun toPlainDrivingDirection(startAddress: String, endAddress: String): PlainDrivingDirection {
+    fun toPlainDrivingDirection(startAddress: String, endAddress: String, carId: Long): PlainDrivingDirection {
         return PlainDrivingDirectionImpl(
             startAddress = startAddress,
             endAddress = endAddress,
@@ -35,7 +35,7 @@ data class DrivingDirectionApiResponse(
             endAt = departureTime.plusSeconds(duration.value.toLong()),
             distance = distance.value,
             duration = duration.value,
-            carId = 0,
+            carId = carId,
         )
     }
 

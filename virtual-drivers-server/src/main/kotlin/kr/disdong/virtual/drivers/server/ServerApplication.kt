@@ -4,6 +4,8 @@ import kr.disdong.virtual.drivers.api.client.ApiClientApplication
 import kr.disdong.virtual.drivers.broadcast.BroadcastApplication
 import kr.disdong.virtual.drivers.cache.CacheApplication
 import kr.disdong.virtual.drivers.domain.DomainApplication
+import kr.disdong.virtual.drivers.domain.module.car.model.PlainCar
+import kr.disdong.virtual.drivers.domain.module.car.model.impl.PlainCarImpl
 import kr.disdong.virtual.drivers.domain.module.car.repository.CarRepository
 import kr.disdong.virtual.drivers.domain.module.user.repository.UserRepository
 import kr.disdong.virtual.drivers.persistence.PersistenceApplication
@@ -22,21 +24,16 @@ class ServerApplication(
 ) : InitializingBean {
     override fun afterPropertiesSet() {
         println("ServerApplication.afterPropertiesSet")
-        // val user = userRepository.save(PlainUserImpl(name = "userName", phone = "010-1234-5678"))
-        // carRepository.saveAll(
-        //    listOf(
-        //        PlainCarImpl(carName = "carName", carNumber = "carNumber1", ownerId = user.id),
-        //        PlainCarImpl(carName = "carName", carNumber = "carNumber2", ownerId = user.id),
-        //    )
-        // )
-        // drivingDirectionService.create(
-        //    GetDrivingDirectionRequest(
-        //        startLatitude = 37.5519,
-        //        startLongitude = 126.9918,
-        //        goalLatitude = 37.4563,
-        //        goalLongitude = 126.7052
-        //    )
-        // )
+
+        if (carRepository.findAll().isNotEmpty()) {
+            return
+        }
+
+        val cars = mutableListOf<PlainCar>()
+        for (i in 1..10) {
+            cars.add(PlainCarImpl(carName = "carName $i", carNumber = "carNumber $i", ownerId = 0))
+        }
+        carRepository.saveAll(cars)
     }
 }
 

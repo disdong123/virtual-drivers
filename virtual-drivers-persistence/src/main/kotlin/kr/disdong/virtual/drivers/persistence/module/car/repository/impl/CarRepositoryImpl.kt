@@ -11,6 +11,14 @@ import org.springframework.stereotype.Repository
 class CarRepositoryImpl(
     private val carJpaRepository: CarJpaRepository
 ) : CarRepository {
+    override fun findAll(): List<Car> {
+        return carJpaRepository.findAll().map { it.toCar() }
+    }
+
+    override fun findNoDrivingCar(): Car? {
+        return carJpaRepository.findNoDrivingCar()?.toCar()
+    }
+
     override fun save(car: PlainCar): Car {
         return carJpaRepository.save(CarEntity.of(car)).toCar()
     }
