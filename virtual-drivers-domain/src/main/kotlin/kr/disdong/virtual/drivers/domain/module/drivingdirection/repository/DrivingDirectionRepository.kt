@@ -4,10 +4,11 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDi
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirectionRoute
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirectionRoute
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.RouteKey
 
 interface DrivingDirectionRepository {
     fun findById(id: Long): DrivingDirection?
-    fun findCurrentRoutes(pairs: List<Pair<Long, Int>>): List<DrivingDirectionRoute>
+    fun findCurrentRoutes(pairs: List<RouteKey>): List<DrivingDirectionRoute>
     fun save(drivingDirection: PlainDrivingDirection): DrivingDirection
     fun saveRoutes(drivingDirectionRoutes: List<PlainDrivingDirectionRoute>): List<DrivingDirectionRoute>
 }

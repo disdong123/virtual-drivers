@@ -2,6 +2,7 @@ package kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.imp
 
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirectionRoute
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.RouteKey
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.DrivingDirectionRouteEntity
 
 class DrivingDirectionRouteImpl(
@@ -9,10 +10,8 @@ class DrivingDirectionRouteImpl(
 ) : DrivingDirectionRoute {
     override val id: Long
         get() = entity.id
-    override val directionId: Long
-        get() = entity.directionId
-    override val order: Int
-        get() = entity.routeOrder
+    override val routeKey: RouteKey
+        get() = RouteKey(entity.directionId, entity.routeOrder)
     override val subRoutes: List<Position>
         get() = entity.subRoutes
 

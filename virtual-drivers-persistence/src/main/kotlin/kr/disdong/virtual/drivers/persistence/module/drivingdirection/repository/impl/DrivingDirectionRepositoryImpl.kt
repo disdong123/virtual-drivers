@@ -4,6 +4,7 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDi
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirectionRoute
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirectionRoute
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.RouteKey
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.DrivingDirectionEntity
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.DrivingDirectionRouteEntity
@@ -20,7 +21,7 @@ class DrivingDirectionRepositoryImpl(
         return drivingDirectionJpaRepository.findById(id).orElse(null)?.toDrivingDirection()
     }
 
-    override fun findCurrentRoutes(pairs: List<Pair<Long, Int>>): List<DrivingDirectionRoute> {
+    override fun findCurrentRoutes(pairs: List<RouteKey>): List<DrivingDirectionRoute> {
         return drivingDirectionRouteJpaRepository.findCurrentRoutes(pairs).map { it.toDrivingDirectionRoute() }
     }
 

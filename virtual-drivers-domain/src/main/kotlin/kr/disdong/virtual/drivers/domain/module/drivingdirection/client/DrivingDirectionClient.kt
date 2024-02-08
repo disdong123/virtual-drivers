@@ -2,6 +2,7 @@ package kr.disdong.virtual.drivers.domain.module.drivingdirection.client
 
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirectionRoute
+import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.RouteKey
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.impl.PlainDrivingDirectionImpl
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.impl.PlainDrivingDirectionRouteImpl
 import java.time.ZonedDateTime
@@ -49,7 +50,7 @@ data class DrivingDirectionApiResponse(
             val end = minOf(temp + SIZE, route.size)
             // Extract the sublist and create a new PlainDrivingDirectionRouteImpl with it
             val subRoute = route.subList(temp, end)
-            routes.add(PlainDrivingDirectionRouteImpl(subRoutes = subRoute, directionId = directionId, order = order++))
+            routes.add(PlainDrivingDirectionRouteImpl(subRoutes = subRoute, routeKey = RouteKey(directionId = directionId, order = order++)))
             // Update temp to the end of the current sublist
             temp += SIZE
         }

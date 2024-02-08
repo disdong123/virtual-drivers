@@ -36,8 +36,8 @@ class DrivingDirectionRouteEntity(
     companion object {
         fun of(plainDrivingDirectionRoute: PlainDrivingDirectionRoute): DrivingDirectionRouteEntity {
             return DrivingDirectionRouteEntity(
-                directionId = plainDrivingDirectionRoute.directionId,
-                routeOrder = plainDrivingDirectionRoute.order,
+                directionId = plainDrivingDirectionRoute.routeKey.directionId,
+                routeOrder = plainDrivingDirectionRoute.routeKey.order,
                 subRoutes = plainDrivingDirectionRoute.subRoutes,
             )
         }

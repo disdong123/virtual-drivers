@@ -10,7 +10,8 @@ interface DrivingDirectionRoute : DrivingDirectionRouteData {
 
 interface DrivingDirectionRouteData {
     val id: Long
-    val directionId: Long
-    val order: Int
+    val routeKey: RouteKey
     val subRoutes: List<Position>
 }
+
+data class RouteKey(val directionId: Long, val order: Int)
