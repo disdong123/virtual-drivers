@@ -1,6 +1,7 @@
 rootProject.name = "virtual-drivers"
 
 include(
+    "internal:virtual-drivers-position-handler",
     "virtual-drivers-api-client",
     "virtual-drivers-broadcast",
     "virtual-drivers-cache",

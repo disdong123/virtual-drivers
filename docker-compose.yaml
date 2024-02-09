@@ -10,8 +10,16 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
       - ./infra/mysql/data:/var/lib/mysql
+      - ./infra/mysql/config:/etc/mysql/conf.d
+      - ./infra/mysql/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 2s
+      timeout: 3s
+      retries: 60
     networks:
       - virtual_drivers
+
   redis:
     container_name: virtual_drivers_redis
     image: redis:latest
@@ -22,6 +30,20 @@ services:
       interval: 2s
       timeout: 3s
       retries: 60
+    networks:
+      - virtual_drivers
+
+  maxwell:
+    container_name: virtual_drivers_maxwell
+    image: zendesk/maxwell
+    command: bin/maxwell --config /etc/maxwell/config.properties
+    volumes:
+      - ./infra/maxwell/config:/etc/maxwell
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - virtual_drivers
 
