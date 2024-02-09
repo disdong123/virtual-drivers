@@ -36,7 +36,7 @@ class CurrentPositionFinder(
             CurrentPositionResponse(currentPositionInfo.directionId, currentPosition)
         }
 
-        positionInfoCache.put(nextPositionInfos)
+        positionInfoCache.addAll(nextPositionInfos)
         return currentPositionResponses
     }
 }

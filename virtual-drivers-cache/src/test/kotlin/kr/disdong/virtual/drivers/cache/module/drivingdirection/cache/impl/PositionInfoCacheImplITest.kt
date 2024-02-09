@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 
 class PositionInfoCacheImplITest : IntegrationTest() {
@@ -18,11 +19,12 @@ class PositionInfoCacheImplITest : IntegrationTest() {
     fun `simple test`() {
         assertNotNull(sut)
 
-        val carId = 1L
         val finder = listOf(PositionInfo(1, 1, 1, Position(1.0, 1.0)))
+        whenever(positionInfoRedisCache.get()).thenReturn(emptyList())
         assertEquals(sut.get(), emptyList<PositionInfo>())
 
-        sut.put(finder)
+        sut.addAll(finder)
+        whenever(positionInfoRedisCache.get()).thenReturn(finder)
         assertEquals(sut.get(), finder)
         assertInstanceOf(List::class.java, sut.get())
     }

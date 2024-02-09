@@ -6,6 +6,8 @@ import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingD
 import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingDirectionResponse
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doNothing
 import org.springframework.beans.factory.annotation.Autowired
 
 class DrivingDirectionServiceITest : IntegrationTest() {
@@ -20,6 +22,7 @@ class DrivingDirectionServiceITest : IntegrationTest() {
     fun `simple test`() {
         // given
         val request = GetDrivingDirectionRequest("", 37.001, 127.001, "", 37.001, 127.001)
+        doNothing().`when`(positionInfoRedisCache).add(any())
 
         // when
         val response = sut.create(request)

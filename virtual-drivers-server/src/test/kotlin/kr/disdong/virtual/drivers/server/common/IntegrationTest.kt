@@ -1,5 +1,6 @@
 package kr.disdong.virtual.drivers.server.common
 
+import kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.PositionInfoRedisCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionClient
 import kr.disdong.virtual.drivers.server.ServerApplication
 import kr.disdong.virtual.drivers.server.fixture.drivingdirection.DrivingDirectionResponseFixture
@@ -18,6 +19,9 @@ import org.springframework.test.context.ActiveProfiles
 class IntegrationTest {
     @MockBean
     private lateinit var drivingDistanceClient: DrivingDirectionClient
+
+    @MockBean
+    protected lateinit var positionInfoRedisCache: PositionInfoRedisCache
 
     @BeforeEach
     fun setUp() {
