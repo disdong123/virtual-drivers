@@ -101,53 +101,17 @@
       type="text/javascript"
       th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapProperties.clientId}}"
     ></script>
+    <script th:inline="javascript" th:src="@{/js/NaverMap.js}"></script>
+    <script
+      th:inline="javascript"
+      th:src="@{/js/PositionStompClient.js}"
+    ></script>
     <script th:inline="javascript">
+      let startPosition = null;
+      let endPosition = null;
       let markers = [];
-
-      // TODO stomp
-      const stompClient = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/api/virtual-drivers',
-      });
-
-      stompClient.onConnect = function (frame) {
-        stompClient.subscribe('/driving-direction/position', function (data) {
-          const responses = JSON.parse(data.body);
-          if (responses === []) {
-            return;
-          }
-
-          // 기존 마커는 맵에서 삭제합니다.
-          markers.forEach((marker) => {
-            marker.setMap(null);
-          });
-
-          markers = responses.map((response) => {
-            console.log(
-              response.position.latitude,
-              response.position.longitude,
-            );
-            return new naver.maps.Marker({
-              icon: {
-                url: '/images/car.png',
-              },
-              position: new naver.maps.LatLng(
-                response.position.latitude,
-                response.position.longitude,
-              ),
-              map: map,
-            });
-          });
-        });
-      };
-
-      stompClient.onWebSocketError = function (event) {
-        console.log('Error: ' + JSON.stringify(event));
-      };
-
-      stompClient.onStompError = (frame) => {
-        console.error('Broker reported error: ' + frame.headers['message']);
-        console.error('Additional details: ' + frame.body);
-      };
+      const map = new NaverMap();
+      const stompClient = new PositionStompClient(map, markers);
 
       $('#connect').on('click', () => {
         stompClient.activate();
@@ -156,15 +120,6 @@
       $('#disconnect').on('click', () => {
         stompClient.deactivate();
       });
-
-      // TODO map
-      const map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10,
-      });
-
-      let startPosition = null;
-      let endPosition = null;
 
       $(function () {
         searchAddress('#start_address_search', '#start_address', 'start');
@@ -177,32 +132,8 @@
           return;
         }
 
-        drawDirectionLineOnMap();
+        map.drawDirectionLine(startPosition, endPosition);
       });
-
-      const drawDirectionLineOnMap = () => {
-        fetch(
-          `http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`,
-          {
-            method: 'GET',
-          },
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.code !== 200) {
-              console.log(data.message);
-              return;
-            }
-
-            new naver.maps.Polyline({
-              map: map,
-              path: data.data.route.map(
-                (route) =>
-                  new naver.maps.LatLng(route.latitude, route.longitude),
-              ),
-            });
-          });
-      };
 
       const searchAddress = (searchTagId, textTagId, type) => {
         $(searchTagId).postcodify({
@@ -214,58 +145,9 @@
             $(`${searchTagId} div.postcode_search_status.summary`).hide();
             $(textTagId).text(data.prevObject.context.innerText);
 
-            setCenterOnMap(data.prevObject.context.innerText, type);
+            map.setCenterWithAddress(data.prevObject.context.innerText, type);
           },
         });
-      };
-
-      const setCenterOnMap = (address, type) => {
-        fetch(
-          `http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`,
-          {
-            method: 'GET',
-          },
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.code !== 200) {
-              console.log(data.message);
-              return;
-            }
-
-            console.log(
-              `latitude: ${data.data.latitude}, longitude: ${data.data.longitude}`,
-            );
-            new naver.maps.Marker({
-              position: new naver.maps.LatLng(
-                data.data.latitude,
-                data.data.longitude,
-              ),
-              map: map,
-            });
-
-            map.setCenter(
-              new naver.maps.LatLng(data.data.latitude, data.data.longitude),
-            );
-
-            switch (type) {
-              case 'start':
-                startPosition = {
-                  address: address,
-                  latitude: data.data.latitude,
-                  longitude: data.data.longitude,
-                };
-                break;
-              case 'end':
-                endPosition = {
-                  address: address,
-                  latitude: data.data.latitude,
-                  longitude: data.data.longitude,
-                };
-                break;
-            }
-          })
-          .catch((error) => console.log(error));
       };
     </script>
   </body>
