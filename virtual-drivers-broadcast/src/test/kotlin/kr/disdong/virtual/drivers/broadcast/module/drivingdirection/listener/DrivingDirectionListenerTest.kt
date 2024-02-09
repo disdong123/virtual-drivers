@@ -15,6 +15,6 @@ class DrivingDirectionListenerTest {
     @Test
     fun `simple test`() {
         assertNotNull(sut)
-        sut.sentToPosition()
+        sut.sendCurrentPositions()
     }
 }

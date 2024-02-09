@@ -5,7 +5,9 @@ import java.time.ZonedDateTime
 
 interface PlainDrivingDirection : DrivingDirectionData
 
-interface DrivingDirection : DrivingDirectionData
+interface DrivingDirection : DrivingDirectionData {
+    fun finish()
+}
 
 interface DrivingDirectionData {
     val id: Long

@@ -12,3 +12,9 @@ abstract class VdException(
 
     abstract fun getCode(): Int
 }
+
+class ShouldDefineVdException : VdException("다른 에러로 정의해야합니다.") {
+    override fun getCode(): Int {
+        return 400
+    }
+}

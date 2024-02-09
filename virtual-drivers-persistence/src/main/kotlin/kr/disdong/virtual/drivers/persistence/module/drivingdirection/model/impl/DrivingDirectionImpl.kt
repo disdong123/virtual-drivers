@@ -8,6 +8,10 @@ import java.time.ZonedDateTime
 class DrivingDirectionImpl(
     private val entity: DrivingDirectionEntity,
 ) : DrivingDirection {
+    override fun finish() {
+        entity.isDeleted = true
+    }
+
     override val id: Long
         get() = entity.id
     override val startAddress: String

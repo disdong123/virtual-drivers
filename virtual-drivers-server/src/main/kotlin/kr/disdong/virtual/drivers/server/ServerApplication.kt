@@ -23,7 +23,7 @@ class ServerApplication(
     private val drivingDirectionService: DrivingDirectionService,
 ) : InitializingBean {
     override fun afterPropertiesSet() {
-        println("ServerApplication.afterPropertiesSet")
+        println("afterPropertiesSet()")
 
         if (carRepository.findAll().isNotEmpty()) {
             return
