@@ -68,3 +68,11 @@ subprojects {
         enabled = true
     }
 }
+
+val prettier by tasks.registering(Exec::class) {
+    commandLine("npx", "prettier", ".", "--write")
+}
+
+tasks.getByName("ktlintFormat") {
+    dependsOn(prettier)
+}

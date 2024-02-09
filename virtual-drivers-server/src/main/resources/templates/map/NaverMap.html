@@ -1,258 +1,272 @@
 <html>
-<head>
+  <head>
     <style>
-        .keyword_label {
-            display: none;
-        }
-        .container {
-            display: flex;
-            margin: 0 5% 0 0; /* 오른쪽 여백 제거, 왼쪽 여백 5% */
-        }
-        .address-inputs {
-            flex: 0 0 30%; /* 너비 30% 고정 */
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin:0
-        }
-        .address-inputs .postcodify_search_controls {
-            margin:0;
-            border-bottom: 1px solid #ddd;
-
-        }
-        .address-inputs .postcodify_search_form{
-            margin:0
-        }
-        .address-inputs input {
-            padding: 12px 8px;
-            border:0;
-            width:calc(100% - 50px);
-            margin:0
-        }
-        .search_button {
-            float: none;
-            position: static;
-            padding: 12px 10px;
-            border: 0;
-            border-left: 1px solid #aaaa;
-            color: #222;
-            font-size: 14px;
-            margin-left: -1px;
-            font-weight: bold;
-            box-sizing: border-box;
-            width: 50px;
-            background: #fff;
-        }
-        .address-input-wrapper{
-            margin:0;
-            border:1px solid #666;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .address-inputs label {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        .map-container {
-            flex: 0 0 70%; /* 너비 70% 고정 */
-            padding: 10px;
-        }
-        .search-full-button {
-            width: 100%;
-            font-size: 14px;
-            background: #b0addb;
-            padding: 15px 0;
-            border: 0;
-            margin-top:20px
-        }
+      .keyword_label {
+        display: none;
+      }
+      .container {
+        display: flex;
+        margin: 0 5% 0 0; /* 오른쪽 여백 제거, 왼쪽 여백 5% */
+      }
+      .address-inputs {
+        flex: 0 0 30%; /* 너비 30% 고정 */
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 0;
+      }
+      .address-inputs .postcodify_search_controls {
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+      }
+      .address-inputs .postcodify_search_form {
+        margin: 0;
+      }
+      .address-inputs input {
+        padding: 12px 8px;
+        border: 0;
+        width: calc(100% - 50px);
+        margin: 0;
+      }
+      .search_button {
+        float: none;
+        position: static;
+        padding: 12px 10px;
+        border: 0;
+        border-left: 1px solid #aaaa;
+        color: #222;
+        font-size: 14px;
+        margin-left: -1px;
+        font-weight: bold;
+        box-sizing: border-box;
+        width: 50px;
+        background: #fff;
+      }
+      .address-input-wrapper {
+        margin: 0;
+        border: 1px solid #666;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .address-inputs label {
+        margin-right: 10px;
+        font-weight: bold;
+      }
+      .map-container {
+        flex: 0 0 70%; /* 너비 70% 고정 */
+        padding: 10px;
+      }
+      .search-full-button {
+        width: 100%;
+        font-size: 14px;
+        background: #b0addb;
+        padding: 15px 0;
+        border: 0;
+        margin-top: 20px;
+      }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-</head>
-<body>
-<h1>지도 테스트</h1>
+  </head>
+  <body>
+    <h1>지도 테스트</h1>
 
-<div class="container">
-    <!-- 주소 입력 부분 -->
-    <div class="address-inputs">
+    <div class="container">
+      <!-- 주소 입력 부분 -->
+      <div class="address-inputs">
         <div class="address-input-wrapper">
-            <div id="start_address_search" class="address-input"></div>
-            <div id="start_address"></div>
-            <div id="end_address_search"  class="address-input"></div>
-            <div id="end_address"></div>
+          <div id="start_address_search" class="address-input"></div>
+          <div id="start_address"></div>
+          <div id="end_address_search" class="address-input"></div>
+          <div id="end_address"></div>
         </div>
-        <button id="direction_button" class="search_button search-full-button">길찾기</button>
+        <button id="direction_button" class="search_button search-full-button">
+          길찾기
+        </button>
+      </div>
+
+      <!-- 지도 부분 -->
+      <div class="map-container">
+        <div id="map" style="width: 100%; height: 400px"></div>
+      </div>
+    </div>
+    <div>
+      <div id="connect">connection</div>
+      <div id="disconnect">disconnection</div>
     </div>
 
-    <!-- 지도 부분 -->
-    <div class="map-container">
-        <div id="map" style="width:100%;height:400px;"></div>
-    </div>
-</div>
-<div>
-    <div id="connect">connection</div>
-    <div id="disconnect">disconnection</div>
-</div>
+    <script
+      type="text/javascript"
+      th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapProperties.clientId}}"
+    ></script>
+    <script th:inline="javascript">
+      let markers = [];
 
-<script type="text/javascript" th:src="@{${'https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + naverMapProperties.clientId}}"></script>
-<script th:inline="javascript">
-    let markers = [];
+      // TODO stomp
+      const stompClient = new StompJs.Client({
+        brokerURL: 'ws://localhost:8080/api/virtual-drivers',
+      });
 
-    // TODO stomp
-    const stompClient = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/api/virtual-drivers'
-    });
+      stompClient.onConnect = function (frame) {
+        stompClient.subscribe('/driving-direction/position', function (data) {
+          const responses = JSON.parse(data.body);
+          if (responses === []) {
+            return;
+          }
 
-    stompClient.onConnect = function(frame) {
-        stompClient.subscribe('/driving-direction/position', function(data) {
-            const responses = JSON.parse(data.body)
-            if(responses === []) {
-                return
-            }
+          // 기존 마커는 맵에서 삭제합니다.
+          markers.forEach((marker) => {
+            marker.setMap(null);
+          });
 
-            // 기존 마커는 맵에서 삭제합니다.
-            markers.forEach(marker => {
-                marker.setMap(null)
-            })
-
-            markers = responses.map(response => {
-                console.log(response.position.latitude, response.position.longitude)
-                return new naver.maps.Marker({
-                    icon: {
-                      url: '/images/car.png',
-                    },
-                    position: new naver.maps.LatLng(response.position.latitude, response.position.longitude),
-                    map: map
-                })
+          markers = responses.map((response) => {
+            console.log(
+              response.position.latitude,
+              response.position.longitude,
+            );
+            return new naver.maps.Marker({
+              icon: {
+                url: '/images/car.png',
+              },
+              position: new naver.maps.LatLng(
+                response.position.latitude,
+                response.position.longitude,
+              ),
+              map: map,
             });
+          });
         });
-    };
+      };
 
-
-
-    stompClient.onWebSocketError = function(event) {
+      stompClient.onWebSocketError = function (event) {
         console.log('Error: ' + JSON.stringify(event));
-    };
+      };
 
-    stompClient.onStompError = (frame) => {
+      stompClient.onStompError = (frame) => {
         console.error('Broker reported error: ' + frame.headers['message']);
         console.error('Additional details: ' + frame.body);
-    };
+      };
 
-    $("#connect").on("click", () => {
+      $('#connect').on('click', () => {
         stompClient.activate();
-    });
+      });
 
-    $("#disconnect").on("click", () => {
+      $('#disconnect').on('click', () => {
         stompClient.deactivate();
-    });
+      });
 
-    // TODO map
-    const map = new naver.maps.Map('map', {
+      // TODO map
+      const map = new naver.maps.Map('map', {
         center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10
-    });
+        zoom: 10,
+      });
 
-    let startPosition = null;
-    let endPosition = null;
+      let startPosition = null;
+      let endPosition = null;
 
-    $(function() {
-        searchAddress(
-            "#start_address_search",
-            "#start_address",
-          "start",
-        )
-        searchAddress(
-            "#end_address_search",
-            "#end_address",
-          "end"
-        )
-    });
+      $(function () {
+        searchAddress('#start_address_search', '#start_address', 'start');
+        searchAddress('#end_address_search', '#end_address', 'end');
+      });
 
-    $("#direction_button").on("click", () => {
-        if(startPosition === null || endPosition === null) {
-            alert("출발지와 도착지를 입력해주세요.")
-            return
+      $('#direction_button').on('click', () => {
+        if (startPosition === null || endPosition === null) {
+          alert('출발지와 도착지를 입력해주세요.');
+          return;
         }
 
-        drawDirectionLineOnMap()
-    })
+        drawDirectionLineOnMap();
+      });
 
-    const drawDirectionLineOnMap = () => {
-        fetch(`http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`, {
-            method: "GET",
-        }).then(response => response.json())
-          .then(data => {
-              if (data.code !== 200) {
-                  console.log(data.message)
-                  return
-              }
+      const drawDirectionLineOnMap = () => {
+        fetch(
+          `http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`,
+          {
+            method: 'GET',
+          },
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.code !== 200) {
+              console.log(data.message);
+              return;
+            }
 
-              new naver.maps.Polyline({
-                  map: map,
-                  path: data.data.route.map(route => new naver.maps.LatLng(route.latitude, route.longitude)),
-              })
-          })
-    }
+            new naver.maps.Polyline({
+              map: map,
+              path: data.data.route.map(
+                (route) =>
+                  new naver.maps.LatLng(route.latitude, route.longitude),
+              ),
+            });
+          });
+      };
 
-    const searchAddress = (
-        searchTagId,
-        textTagId,
-        type,
-    ) => {
+      const searchAddress = (searchTagId, textTagId, type) => {
         $(searchTagId).postcodify({
-            beforeSearch : function(data) {
-                $("#entry_box").hide();
-            },
-            afterSelect: function(data) {
-                $(`${searchTagId} div.postcode_search_result`).remove();
-                $(`${searchTagId} div.postcode_search_status.summary`).hide();
-                $(textTagId).text(data.prevObject.context.innerText)
+          beforeSearch: function (data) {
+            $('#entry_box').hide();
+          },
+          afterSelect: function (data) {
+            $(`${searchTagId} div.postcode_search_result`).remove();
+            $(`${searchTagId} div.postcode_search_status.summary`).hide();
+            $(textTagId).text(data.prevObject.context.innerText);
 
-                setCenterOnMap(data.prevObject.context.innerText, type)
-            },
+            setCenterOnMap(data.prevObject.context.innerText, type);
+          },
         });
-    }
+      };
 
-    const setCenterOnMap = (address, type) => {
-        fetch(`http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`, {
-            method: "GET",
-        }).then(response => response.json())
-            .then(data => {
-                if(data.code !== 200) {
-                    console.log(data.message)
-                    return
-                }
+      const setCenterOnMap = (address, type) => {
+        fetch(
+          `http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`,
+          {
+            method: 'GET',
+          },
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.code !== 200) {
+              console.log(data.message);
+              return;
+            }
 
-                console.log(`latitude: ${data.data.latitude}, longitude: ${data.data.longitude}`)
-                new naver.maps.Marker({
-                    position: new naver.maps.LatLng(data.data.latitude, data.data.longitude),
-                    map: map
-                })
+            console.log(
+              `latitude: ${data.data.latitude}, longitude: ${data.data.longitude}`,
+            );
+            new naver.maps.Marker({
+              position: new naver.maps.LatLng(
+                data.data.latitude,
+                data.data.longitude,
+              ),
+              map: map,
+            });
 
-                map.setCenter(new naver.maps.LatLng(data.data.latitude, data.data.longitude))
+            map.setCenter(
+              new naver.maps.LatLng(data.data.latitude, data.data.longitude),
+            );
 
-                switch (type) {
-                    case "start":
-                        startPosition = {
-                            address: address,
-                            latitude: data.data.latitude,
-                            longitude: data.data.longitude,
-                        };
-                        break
-                    case "end":
-                        endPosition = {
-                            address: address,
-                            latitude: data.data.latitude,
-                            longitude: data.data.longitude,
-                        };
-                        break
-                }
-            })
-            .catch(error => console.log(error))
-    }
-</script>
-</body>
+            switch (type) {
+              case 'start':
+                startPosition = {
+                  address: address,
+                  latitude: data.data.latitude,
+                  longitude: data.data.longitude,
+                };
+                break;
+              case 'end':
+                endPosition = {
+                  address: address,
+                  latitude: data.data.latitude,
+                  longitude: data.data.longitude,
+                };
+                break;
+            }
+          })
+          .catch((error) => console.log(error));
+      };
+    </script>
+  </body>
 </html>

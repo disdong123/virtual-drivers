@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       version-catalog-repository:
-        description: "version catalog repository name"
-        default: "disdong123/version-catalog"
+        description: 'version catalog repository name'
+        default: 'disdong123/version-catalog'
         required: true
       version-catalog-ref:
-        description: "version catalog reference"
+        description: 'version catalog reference'
         required: true
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
   pending-status-processor:
     runs-on: ubuntu-latest
     steps:
-      - name: "Create and send pending status to version catalog repository"
+      - name: 'Create and send pending status to version catalog repository'
         shell: bash
         env:
           TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -71,9 +71,9 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          java-version: "17"
-          distribution: "temurin"
-          cache: "gradle"
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
@@ -86,7 +86,7 @@ jobs:
     needs: version-catalog-test
     runs-on: ubuntu-latest
     steps:
-      - name: "Create and send success status to version catalog repository"
+      - name: 'Create and send success status to version catalog repository'
         shell: bash
         env:
           TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -105,7 +105,7 @@ jobs:
     needs: version-catalog-test
     runs-on: ubuntu-latest
     steps:
-      - name: "Create and send failure status to version catalog repository"
+      - name: 'Create and send failure status to version catalog repository'
         shell: bash
         env:
           TARGET_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -119,6 +119,7 @@ jobs:
             -F description="${{ env.DESCRIPTION }}" \
             -F context="${{ env.CONTEXT }}" \
             -F target_url=${{ env.TARGET_URL }}
+
 #  change-and-build-test:
 #    needs: version-catalog-test
 #    runs-on: ubuntu-latest
