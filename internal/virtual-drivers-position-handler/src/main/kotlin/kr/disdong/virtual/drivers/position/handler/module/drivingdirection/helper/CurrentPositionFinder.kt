@@ -1,4 +1,4 @@
-package kr.disdong.virtual.drivers.broadcast.module.drivingdirection.helper
+package kr.disdong.virtual.drivers.position.handler.module.drivingdirection.helper
 
 import kr.disdong.virtual.drivers.common.exception.ShouldDefineVdException
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionInfo
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-@Deprecated("position-handler 가 없는 경우 사용할 수 있습니다.")
 class CurrentPositionFinder(
     private val positionInfoCache: PositionInfoCache,
     private val drivingDirectionRepository: DrivingDirectionRepository,

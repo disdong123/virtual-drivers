@@ -31,4 +31,13 @@ class PositionInfoRedisCache(
     fun delete() {
         redisTemplate.delete(key)
     }
+
+    /**
+     * TODO 테스트 용
+     *
+     * @return
+     */
+    fun flushAll() {
+        redisTemplate.connectionFactory!!.connection.flushAll()
+    }
 }

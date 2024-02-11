@@ -3,6 +3,7 @@ package kr.disdong.virtual.drivers.server
 import kr.disdong.virtual.drivers.api.client.ApiClientApplication
 import kr.disdong.virtual.drivers.broadcast.BroadcastApplication
 import kr.disdong.virtual.drivers.cache.CacheApplication
+import kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.PositionInfoRedisCache
 import kr.disdong.virtual.drivers.domain.DomainApplication
 import kr.disdong.virtual.drivers.domain.module.car.model.PlainCar
 import kr.disdong.virtual.drivers.domain.module.car.model.impl.PlainCarImpl
@@ -21,9 +22,11 @@ class ServerApplication(
     private val userRepository: UserRepository,
     private val carRepository: CarRepository,
     private val drivingDirectionService: DrivingDirectionService,
+    private val positionInfoCache: PositionInfoRedisCache,
 ) : InitializingBean {
     override fun afterPropertiesSet() {
         println("afterPropertiesSet()")
+        positionInfoCache.flushAll()
 
         if (carRepository.findAll().isNotEmpty()) {
             return

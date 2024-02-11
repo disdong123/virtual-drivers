@@ -48,7 +48,7 @@ internal class CurrentPositionFinderTest {
             `길찾기 정보`(directionId = 2),
             `길찾기 정보`(directionId = 3),
         )
-        whenever(positionInfoCache.get()).thenReturn(positionInfos)
+        whenever(positionInfoCache.getAll()).thenReturn(positionInfos)
         whenever(drivingDirectionRepository.findCurrentRoutes(any())).thenReturn(routes)
         whenever(drivingDirectionRepository.findAllByIds(any())).thenReturn(directions)
 

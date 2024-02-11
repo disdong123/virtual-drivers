@@ -1,23 +1,39 @@
-# Springboot template
+# Virtual drivers
 
-SpringBoot 기반 서버 구현을 위한 템플릿입니다.
+가상 차량 관제 서비스입니다.
 
-### Flow
+### Workflow
+
+실 주행 데이터가 없으므로 길찾기 api 에서 반환되는 위치 정보를 실시간 위치로 사용합니다.
+
+```mermaid
+flowchart RL
+  Core[IoT Device] -.->|주행 데이터| PositionHandler[position handler] ---> |현재 위치 정보| VirtualDrivers[virtual drivers server] ---> Client[client]
+
+  Mysql -->|길찾기 좌표 정보| PositionHandler
+```
+
+### Architecture
 
 ```mermaid
 flowchart TB
   Client --->|Dto| Service
   Service ---|Domain object| DORepository[DO Repository]
+  Service ---|Domain object| DOApiClient[DO Api Client]
+  Service ---|Domain object| DOCache[DO Cache]
   DORepository ---|Domain object| JpaRepository[Jpa Repository]
-  DORepository ---|Domain object| JdbcRepository[Jdbc Repository]
-  DORepository -.-|Domain object| SomeRepository[Some Repository]
+  DOApiClient ---|Domain object| FeignClient[Feign Repository]
+  DOCache ---|Domain object| RedisCache[Redis Repository]
   JpaRepository ---|Entity| Database
-  JdbcRepository ---|Entity| Database
-  SomeRepository -.-|Entity| Database
+  FeignClient ---|DTO| Api
+  RedisCache -.-|DTO| Redis
 ```
 
 ### 참고
 
-- postcodify: https://www.poesis.org/postcodify/guide/jquery_plugin
-- directions 5: https://guide.ncloud-docs.com/docs/maps-direction5-api
-- geocode: https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode
+- 주소검색
+  - postcodify: https://www.poesis.org/postcodify/guide/jquery_plugin
+- 길찾기
+  - directions 5: https://guide.ncloud-docs.com/docs/maps-direction5-api
+- 주소/좌표 변환
+  - geocode: https://api.ncloud-docs.com/docs/ai-naver-mapsgeocoding-geocode

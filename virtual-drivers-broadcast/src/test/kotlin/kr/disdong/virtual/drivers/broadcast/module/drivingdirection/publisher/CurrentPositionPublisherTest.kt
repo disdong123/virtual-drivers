@@ -1,4 +1,4 @@
-package kr.disdong.virtual.drivers.broadcast.module.drivingdirection.listener
+package kr.disdong.virtual.drivers.broadcast.module.drivingdirection.publisher
 
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Disabled
@@ -8,13 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 @Disabled
-class DrivingDirectionListenerTest {
+class CurrentPositionPublisherTest {
     @Autowired
-    private lateinit var sut: DrivingDirectionListener
+    private lateinit var sut: CurrentPositionPublisher
 
     @Test
     fun `simple test`() {
         assertNotNull(sut)
-        sut.sendCurrentPositions()
+        sut.publishAll()
     }
 }

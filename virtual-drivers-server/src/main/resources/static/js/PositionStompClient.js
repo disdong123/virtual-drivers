@@ -9,14 +9,23 @@ class PositionStompClient {
       this._stompClient.subscribe(
         '/driving-direction/position',
         function (data) {
-          const responses = JSON.parse(data.body);
-          if (responses === []) {
+          // 한번에 넘어오면 아래처럼 처리합니다.
+          // https://github.com/disdong123/virtual-drivers/commit/b1d9980418b23e428d2822d808ea291154a38e0f#diff-a9f4db23c5e5627de6755466051cf7381fe40678f7e1c781f3ba6d3170e299d3
+          const response = JSON.parse(data.body);
+          if (response === undefined || response === null) {
             return;
           }
 
-          markers.forEach((marker) => marker.setMap(null));
-          markers = responses.map((response) =>
-            map.createMarker(response.position),
+          const marker = markers.find(
+            (marker) => marker.title === response.directionId,
+          );
+          if (marker) {
+            marker.setMap(null);
+            markers.splice(markers.indexOf(marker), 1);
+          }
+
+          markers.push(
+            map.createMarker(response.position, response.directionId),
           );
         },
       );

@@ -1,7 +1,7 @@
 dependencies {
     implementation(project(":virtual-drivers-domain"))
     implementation(libs.spring.boot.starter.cache)
-    implementation(libs.spring.boot.starter.data.redis)
+    api(libs.spring.boot.starter.data.redis)
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
 
     testImplementation("org.testcontainers:testcontainers:1.19.3")

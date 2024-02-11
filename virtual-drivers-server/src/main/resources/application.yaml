@@ -1,3 +1,6 @@
+spring.config.activate.on-profile: dev
+---
+spring.config.activate.on-profile: prod
 server:
   servlet:
     context-path: /api
@@ -6,6 +9,8 @@ spring:
   config:
     import:
       - persistence.yaml
+      - api-client.yaml
+      - cache.yaml
 
 springdoc:
   swagger-ui:

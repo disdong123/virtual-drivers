@@ -7,7 +7,7 @@ class NaverMap {
     });
   }
 
-  setCenterWithAddress = (address, type) => {
+  setCenterWithAddress = (address, type, markers) => {
     fetch(
       `http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`,
       {
@@ -24,10 +24,15 @@ class NaverMap {
         console.log(
           `latitude: ${data.data.latitude}, longitude: ${data.data.longitude}`,
         );
-        this.createMarker({
-          latitude: data.data.latitude,
-          longitude: data.data.longitude,
-        });
+
+        markers.find((marker) => marker.title === type)?.setMap(null);
+        this.createMarker(
+          {
+            latitude: data.data.latitude,
+            longitude: data.data.longitude,
+          },
+          type,
+        );
 
         this._map.setCenter(
           new naver.maps.LatLng(data.data.latitude, data.data.longitude),
@@ -76,9 +81,10 @@ class NaverMap {
       });
   };
 
-  createMarker = (position) => {
+  createMarker = (position, title) => {
     return new naver.maps.Marker({
       position: new naver.maps.LatLng(position.latitude, position.longitude),
+      title: title,
       map: this._map,
     });
   };

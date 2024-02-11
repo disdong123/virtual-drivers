@@ -38,7 +38,7 @@ services:
     image: zendesk/maxwell
     command: bin/maxwell --config /etc/maxwell/config.properties
     volumes:
-      - ./infra/maxwell/config:/etc/maxwell
+      - ./infra/maxwell:/etc/maxwell
     depends_on:
       mysql:
         condition: service_healthy

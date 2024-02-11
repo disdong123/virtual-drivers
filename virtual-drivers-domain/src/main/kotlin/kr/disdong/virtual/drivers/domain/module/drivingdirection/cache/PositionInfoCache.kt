@@ -5,7 +5,7 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.RouteKey
 
 interface PositionInfoCache {
 
-    fun get(): List<PositionInfo>
+    fun getAll(): List<PositionInfo>
     fun add(value: PositionInfo)
     fun addAll(values: List<PositionInfo>)
 }

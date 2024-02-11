@@ -13,12 +13,12 @@ class PositionInfoCacheImpl(
     private val positionInfoCaffeineCache: PositionInfoCaffeineCache,
     private val positionInfoRedisCache: PositionInfoRedisCache,
 ) : PositionInfoCache {
-    override fun get(): List<PositionInfo> {
+    override fun getAll(): List<PositionInfo> {
         return positionInfoRedisCache.get()
     }
 
     override fun add(value: PositionInfo) {
-        val position = get().toMutableList()
+        val position = getAll().toMutableList()
         position.add(value)
         addAll(position)
     }

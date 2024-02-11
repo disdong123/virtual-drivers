@@ -30,7 +30,7 @@ class DrivingDirectionServiceTest {
         val request = GetDrivingDirectionRequest("", 37.001, 127.001, "", 37.001, 127.001)
         whenever(drivingDirectionClient.getDrivingDirection(any())).thenReturn(DrivingDirectionResponseFixture.any())
         whenever(drivingDirectionRepository.save(any())).thenReturn(DrivingDirectionFixture.any())
-        whenever(positionInfoCache.get()).thenReturn(emptyList())
+        whenever(positionInfoCache.getAll()).thenReturn(emptyList())
         whenever(carRepository.findNoDrivingCar()).thenReturn(CarImpl(CarEntity(1, "carName", "carNumber", 1)))
 
         // when

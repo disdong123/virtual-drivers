@@ -8,6 +8,7 @@ include(
     "virtual-drivers-domain",
     "virtual-drivers-persistence",
     "virtual-drivers-common",
+    "virtual-drivers-publisher",
     "virtual-drivers-server"
 )
 
