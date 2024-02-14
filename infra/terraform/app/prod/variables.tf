@@ -9,10 +9,6 @@ terraform {
   required_version = ">= 1.3"
 }
 
-variable "domain" {
-  default = "bbpstudio.kr"
-}
-
 variable "region" {
   default = "ap-northeast-2"
 }
