@@ -44,3 +44,7 @@ out/
 
 # application.yaml
 **/*-local.yaml
+
+# terraform
+.terraform*
+.terraform/**
