@@ -32,6 +32,7 @@ class ServerApplication(
             return
         }
 
+        // 차량은 임시로 10대 생성
         val cars = mutableListOf<PlainCar>()
         for (i in 1..10) {
             cars.add(PlainCarImpl(carName = "carName $i", carNumber = "carNumber $i", ownerId = 0))

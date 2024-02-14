@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-@Deprecated("position-handler 가 없는 경우 사용할 수 있습니다.")
+@Deprecated("virtual-drivers-position-handler 가 없는 경우에 사용합니다.")
 class CurrentPositionFinder(
     private val positionInfoCache: PositionInfoCache,
     private val drivingDirectionRepository: DrivingDirectionRepository,

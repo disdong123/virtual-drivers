@@ -10,7 +10,7 @@ class MapView(
     private val naverMapProperties: NaverMapProperties,
 ) {
 
-    @GetMapping("/map/main")
+    @GetMapping("/main")
     fun map(
         model: Model
     ): String {

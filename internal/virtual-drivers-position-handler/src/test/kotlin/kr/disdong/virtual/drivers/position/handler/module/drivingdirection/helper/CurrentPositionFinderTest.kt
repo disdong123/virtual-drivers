@@ -1,15 +1,14 @@
-package kr.disdong.virtual.drivers.broadcast.module.drivingdirection.helper
+package kr.disdong.virtual.drivers.position.handler.module.drivingdirection.helper
 
-import kr.disdong.virtual.drivers.broadcast.module.drivingdirection.fixture.drivingdirection.DrivingDirectionFixture
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionInfo
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionInfoCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.Position
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.DrivingDirectionRouteEntity
 import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.impl.DrivingDirectionRouteImpl
+import kr.disdong.virtual.drivers.position.handler.fixture.drivingdirection.DrivingDirectionFixture
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doNothing
@@ -18,7 +17,6 @@ import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-@Disabled
 internal class CurrentPositionFinderTest {
     private val positionInfoCache = mock<PositionInfoCache>()
     private val drivingDirectionRepository = mock<DrivingDirectionRepository>()

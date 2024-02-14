@@ -5,6 +5,8 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
+import jakarta.persistence.Table
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.PlainDrivingDirection
 import kr.disdong.virtual.drivers.persistence.common.model.BaseEntity
@@ -12,6 +14,7 @@ import kr.disdong.virtual.drivers.persistence.module.drivingdirection.model.impl
 import java.time.ZonedDateTime
 
 @Entity(name = "driving_direction")
+@Table(name = "driving_direction", indexes = [Index(name = "idx_car_id", columnList = "carId")])
 class DrivingDirectionEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

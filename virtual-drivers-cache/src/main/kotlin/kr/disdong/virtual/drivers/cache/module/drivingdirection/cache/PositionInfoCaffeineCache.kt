@@ -15,7 +15,7 @@ class PositionInfoCaffeineCache(
     private val cache = (caffeineCacheManager as CaffeineCacheManager).getCache("virtual-drivers-caffeine-cache")!! as CaffeineCache
 
     companion object {
-        private const val key = "next-position"
+        private const val key = "position-info"
     }
     fun get(): List<PositionInfo> {
         return (cache.get(key, List::class.java) ?: emptyList<PositionInfo>()) as List<PositionInfo>

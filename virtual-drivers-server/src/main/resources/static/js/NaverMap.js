@@ -58,7 +58,7 @@ class NaverMap {
       .catch((error) => console.log(error));
   };
 
-  drawDirectionLine = (startPosition, endPosition) => {
+  getDirection = (startPosition, endPosition) => {
     fetch(
       `http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`,
       {

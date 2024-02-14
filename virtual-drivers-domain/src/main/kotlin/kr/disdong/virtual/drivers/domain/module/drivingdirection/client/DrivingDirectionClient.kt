@@ -25,6 +25,9 @@ data class DrivingDirectionApiResponse(
     val departureTime: ZonedDateTime,
     val route: List<Position>,
 ) {
+    companion object {
+        private const val SUB_ROUTE_MAX_SIZE = 100
+    }
 
     fun toPlainDrivingDirection(startAddress: String, endAddress: String, carId: Long): PlainDrivingDirection {
         return PlainDrivingDirectionImpl(
@@ -40,27 +43,11 @@ data class DrivingDirectionApiResponse(
         )
     }
 
-    fun toPlainDrivingDirectionRoutes(directionId: Long): List<PlainDrivingDirectionRoute> {
-        val SIZE = 100
-        var temp = 0
-        var order = 0
-        val routes = mutableListOf<PlainDrivingDirectionRoute>()
-        while (temp < route.size) {
-            // Calculate the end index ensuring it doesn't go beyond the route's size
-            val end = minOf(temp + SIZE, route.size)
-            // Extract the sublist and create a new PlainDrivingDirectionRouteImpl with it
-            val subRoute = route.subList(temp, end)
-            routes.add(PlainDrivingDirectionRouteImpl(subRoutes = subRoute, routeKey = RouteKey(directionId = directionId, order = order++)))
-            // Update temp to the end of the current sublist
-            temp += SIZE
-        }
-
-        // Remove the following lines as they are no longer needed with the above correction
-        // if (temp < route.size) {
-        //     routes.add(PlainDrivingDirectionRouteImpl(subRoutes = route.subList(temp, route.size), directionId = directionId, order = order++))
-        // }
-
-        return routes
+    fun toPlainDrivingDirectionRoutes(directionId: Long): List<PlainDrivingDirectionRoute> = route.chunked(SUB_ROUTE_MAX_SIZE).mapIndexed { index, subRoute ->
+        PlainDrivingDirectionRouteImpl(
+            subRoutes = subRoute,
+            routeKey = RouteKey(directionId = directionId, order = index)
+        )
     }
 }
 

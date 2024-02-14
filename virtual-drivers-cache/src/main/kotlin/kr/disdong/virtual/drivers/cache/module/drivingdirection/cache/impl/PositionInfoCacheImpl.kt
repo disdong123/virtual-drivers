@@ -1,7 +1,5 @@
 package kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.impl
 
-import kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.DrivingDirectionRouteLocalCache
-import kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.PositionInfoCaffeineCache
 import kr.disdong.virtual.drivers.cache.module.drivingdirection.cache.PositionInfoRedisCache
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionInfo
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionInfoCache
@@ -9,8 +7,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class PositionInfoCacheImpl(
-    private val drivingDirectionRouteLocalCache: DrivingDirectionRouteLocalCache,
-    private val positionInfoCaffeineCache: PositionInfoCaffeineCache,
     private val positionInfoRedisCache: PositionInfoRedisCache,
 ) : PositionInfoCache {
     override fun getAll(): List<PositionInfo> {

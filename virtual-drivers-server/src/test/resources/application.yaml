@@ -8,6 +8,7 @@ spring:
     import:
       - persistence.yaml
       - api-client.yaml
+      - cache.yaml
 
 springdoc:
   swagger-ui:
