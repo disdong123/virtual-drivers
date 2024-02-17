@@ -44,6 +44,10 @@ out/
 
 # application.yaml
 **/*-local.yaml
+**/application.yaml
+**/persistence.yaml
+**/cache.yaml
+**/api-client.yaml
 
 # terraform
 .terraform*
