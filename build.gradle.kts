@@ -73,7 +73,7 @@ val prettier by tasks.registering(Exec::class) {
     commandLine("npx", "prettier", ".", "--write")
 }
 
-val env = tasks.register("env") {
+val ghSecretSet = tasks.register("env") {
     exec {
         commandLine("bash", "-c", "gh secret set ENV_SERVER < ./virtual-drivers-server/src/main/resources/application.yaml")
     }
@@ -93,8 +93,4 @@ val env = tasks.register("env") {
 
 tasks.getByName("ktlintFormat") {
     dependsOn(prettier)
-}
-
-tasks.getByName("build") {
-    dependsOn(env)
 }
