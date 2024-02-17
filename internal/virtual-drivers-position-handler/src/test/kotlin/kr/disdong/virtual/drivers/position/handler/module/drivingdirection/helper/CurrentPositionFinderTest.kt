@@ -27,7 +27,7 @@ internal class CurrentPositionFinderTest {
 
     @BeforeEach
     fun setup() {
-        doNothing().`when`(positionInfoCache).addAll(any())
+        doNothing().`when`(positionInfoCache).deleteAndAddAll(any())
     }
 
     @Test
@@ -60,7 +60,7 @@ internal class CurrentPositionFinderTest {
         assertEquals(response[0].position, Position(0.0, 0.0))
         assertEquals(response[1].position, Position(1.0, 1.0))
         assertEquals(response[2].position, Position(1.0, 1.0))
-        verify(positionInfoCache, times(1)).addAll(any())
+        verify(positionInfoCache, times(1)).deleteAndAddAll(any())
     }
 
     private fun `위치 정보`(directionId: Long, order: Int, index: Int) = PositionInfo(

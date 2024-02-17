@@ -23,7 +23,7 @@ class PositionInfoCacheImplITest : IntegrationTest() {
         whenever(positionInfoRedisCache.get()).thenReturn(emptyList())
         assertEquals(sut.getAll(), emptyList<PositionInfo>())
 
-        sut.addAll(finder)
+        sut.deleteAndAddAll(finder)
         whenever(positionInfoRedisCache.get()).thenReturn(finder)
         assertEquals(sut.getAll(), finder)
         assertInstanceOf(List::class.java, sut.getAll())

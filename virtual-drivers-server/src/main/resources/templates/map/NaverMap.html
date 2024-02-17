@@ -145,7 +145,11 @@
             $(`${searchTagId} div.postcode_search_status.summary`).hide();
             $(textTagId).text(data.prevObject.context.innerText);
 
-            map.setCenterWithAddress(data.prevObject.context.innerText, type);
+            map.setCenterWithAddress(
+              data.prevObject.context.innerText,
+              type,
+              markers,
+            );
           },
         });
       };

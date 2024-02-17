@@ -7,7 +7,7 @@ interface PositionInfoCache {
 
     fun getAll(): List<PositionInfo>
     fun add(value: PositionInfo)
-    fun addAll(values: List<PositionInfo>)
+    fun deleteAndAddAll(values: List<PositionInfo>)
 }
 
 data class PositionInfo(

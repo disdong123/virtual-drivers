@@ -26,7 +26,7 @@ data class DrivingDirectionApiResponse(
     val route: List<Position>,
 ) {
     companion object {
-        private const val SUB_ROUTE_MAX_SIZE = 100
+        private const val SUB_ROUTE_MAX_SIZE = 5
     }
 
     fun toPlainDrivingDirection(startAddress: String, endAddress: String, carId: Long): PlainDrivingDirection {

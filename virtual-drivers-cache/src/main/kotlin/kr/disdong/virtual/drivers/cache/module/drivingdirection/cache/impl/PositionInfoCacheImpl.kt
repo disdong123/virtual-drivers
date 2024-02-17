@@ -16,10 +16,10 @@ class PositionInfoCacheImpl(
     override fun add(value: PositionInfo) {
         val position = getAll().toMutableList()
         position.add(value)
-        addAll(position)
+        deleteAndAddAll(position)
     }
 
-    override fun addAll(values: List<PositionInfo>) {
-        positionInfoRedisCache.addAll(values)
+    override fun deleteAndAddAll(values: List<PositionInfo>) {
+        positionInfoRedisCache.deleteAndAddAll(values)
     }
 }

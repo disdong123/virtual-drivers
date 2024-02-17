@@ -29,9 +29,9 @@ flowchart TB
   RedisCache -.-|DTO| Redis
 ```
 
-
 ## terraform
-### aws-vault
+
+### aws-vault 설정
 
 - 준비
   - iam 유저 생성
@@ -41,6 +41,7 @@ flowchart TB
   - https://dev.classmethod.jp/articles/managing-iam-roles-with-aws-vault/
 
 ### 명령어
+
 ```
 avs exec disdong -- terraform plan
 ```

@@ -10,16 +10,16 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface DrivingDirectionRouteJpaRepository : JpaRepository<DrivingDirectionRouteEntity, Long>, DrivingDirectionRouteCustomJpaRepository
 
 interface DrivingDirectionRouteCustomJpaRepository {
-    fun findCurrentRoutes(pairs: List<RouteKey>): List<DrivingDirectionRouteEntity>
+    fun findCurrentRoutes(keys: List<RouteKey>): List<DrivingDirectionRouteEntity>
 }
 
 class DrivingDirectionRouteCustomJpaRepositoryImpl(
     private val jpaQueryFactory: JPAQueryFactory,
 ) : DrivingDirectionRouteCustomJpaRepository {
     private val drivingDirectionRouteEntity = QDrivingDirectionRouteEntity.drivingDirectionRouteEntity
-    override fun findCurrentRoutes(pairs: List<RouteKey>): List<DrivingDirectionRouteEntity> {
+    override fun findCurrentRoutes(keys: List<RouteKey>): List<DrivingDirectionRouteEntity> {
         val builder = BooleanBuilder()
-        pairs.map {
+        keys.map {
             builder.or(
                 drivingDirectionRouteEntity.directionId.eq(it.directionId)
                     .and(drivingDirectionRouteEntity.routeOrder.eq(it.order))

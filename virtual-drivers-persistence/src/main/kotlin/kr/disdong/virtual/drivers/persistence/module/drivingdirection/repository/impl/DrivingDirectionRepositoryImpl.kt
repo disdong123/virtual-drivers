@@ -25,8 +25,8 @@ class DrivingDirectionRepositoryImpl(
         return drivingDirectionJpaRepository.findAllById(ids).map { it.toDrivingDirection() }
     }
 
-    override fun findCurrentRoutes(pairs: List<RouteKey>): List<DrivingDirectionRoute> {
-        return drivingDirectionRouteJpaRepository.findCurrentRoutes(pairs).map { it.toDrivingDirectionRoute() }
+    override fun findCurrentRoutes(keys: List<RouteKey>): List<DrivingDirectionRoute> {
+        return drivingDirectionRouteJpaRepository.findCurrentRoutes(keys).map { it.toDrivingDirectionRoute() }
     }
 
     override fun save(drivingDirection: PlainDrivingDirection): DrivingDirection {

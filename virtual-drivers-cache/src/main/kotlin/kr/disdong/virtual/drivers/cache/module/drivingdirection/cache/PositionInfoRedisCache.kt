@@ -20,12 +20,12 @@ class PositionInfoRedisCache(
         redisTemplate.opsForList().rightPush(key, value)
     }
 
-    fun addAll(value: List<PositionInfo>): Long? {
+    fun deleteAndAddAll(value: List<PositionInfo>): Long? {
+        delete()
         if (value.isEmpty()) {
             return 0
         }
 
-        delete()
         return redisTemplate.opsForList().rightPushAll(key, value)
     }
 

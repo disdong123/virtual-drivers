@@ -29,13 +29,14 @@ class CurrentPositionFinder(
 
             if (currentPositionInfo.isEndPosition(currentPosition)) {
                 (drivingDirectionsMap[route.routeKey.directionId] ?: throw ShouldDefineVdException()).finish()
+            } else {
+                nextPositionInfos.add(currentPositionInfo.getNextPositionInfo(route.subRoutes.size))
             }
 
-            nextPositionInfos.add(currentPositionInfo.getNextPositionInfo(route.subRoutes.size))
             CurrentPositionResponse(currentPositionInfo.directionId, currentPosition)
         }
 
-        positionInfoCache.addAll(nextPositionInfos)
+        positionInfoCache.deleteAndAddAll(nextPositionInfos)
         return currentPositionResponses
     }
 }

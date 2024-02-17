@@ -11,6 +11,7 @@ class DrivingDirectionApiResponseTest {
     @DisplayName("길찾기 응답을 저장할 때")
     @Nested
     inner class ToPlainDrivingDirectionRoutes {
+        private val SUB_ROUTE_MAX_SIZE = 5
 
         @Test
         fun `route 가 매우 많을 수 있으므로 100개씩 끊어서 저장한다`() {
@@ -18,9 +19,9 @@ class DrivingDirectionApiResponseTest {
 
             val response = sut.toPlainDrivingDirectionRoutes(1)
 
-            assertEquals(response.size, 10)
-            assertEquals(response[0].subRoutes.size, 100)
-            assertEquals(response[9].subRoutes.size, 99)
+            assertEquals(response.size, 200)
+            assertEquals(response[0].subRoutes.size, SUB_ROUTE_MAX_SIZE)
+            assertEquals(response[199].subRoutes.size, 4)
         }
 
         @Test
