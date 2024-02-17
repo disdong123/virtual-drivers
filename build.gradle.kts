@@ -73,6 +73,28 @@ val prettier by tasks.registering(Exec::class) {
     commandLine("npx", "prettier", ".", "--write")
 }
 
+val env = tasks.register("env") {
+    exec {
+        commandLine("bash", "-c", "gh secret set ENV_SERVER < ./virtual-drivers-server/src/main/resources/application.yaml")
+    }
+    exec {
+        commandLine("bash", "-c", "gh secret set ENV_PERSISTENCE < ./virtual-drivers-persistence/src/main/resources/persistence.yaml")
+    }
+    exec {
+        commandLine("bash", "-c", "gh secret set ENV_CACHE < ./virtual-drivers-cache/src/main/resources/cache.yaml")
+    }
+    exec {
+        commandLine("bash", "-c", "gh secret set ENV_API_CLIENT < ./virtual-drivers-api-client/src/main/resources/api-client.yaml")
+    }
+    exec {
+        commandLine("bash", "-c", "gh secret set ENV_POSITION_HANDLER < ./internal/virtual-drivers-position-handler/src/main/resources/application.yaml")
+    }
+}
+
 tasks.getByName("ktlintFormat") {
     dependsOn(prettier)
+}
+
+tasks.getByName("build") {
+    dependsOn(env)
 }

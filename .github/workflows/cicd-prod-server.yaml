@@ -12,12 +12,6 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: echo
-        run: |
-          echo ${{ secrets.ENV_SERVER }}
-          echo ${{ secrets.DISDONG_TOKEN }}
-          echo ${{ secrets.DOCKERHUB_USER }}
-          echo ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up JDK 19
