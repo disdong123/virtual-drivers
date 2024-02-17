@@ -7,6 +7,10 @@ on:
 
 env:
   IMAGE_TAG: ${{ github.sha }}
+  ENV_SERVER: ${{ secrets.ENV_SERVER }}
+  ENV_PERSISTENCE: ${{ secrets.ENV_PERSISTENCE }}
+  ENV_CACHE: ${{ secrets.ENV_CACHE }}
+  ENV_API_CLIENT: ${{ secrets.ENV_API_CLIENT }}
 
 jobs:
   ci:
@@ -14,6 +18,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Copy application.yaml
+        run: |
+          touch ./virtual-drivers-server/src/main/resources/application.yaml
+          echo "${{ env.ENV_SERVER }}" > ./virtual-drivers-server/src/main/resources/application.yaml
+          touch ./virtual-drivers-server/src/main/resources/persistence.yaml
+          echo "${{ env.ENV_PERSISTENCE }}" > ./virtual-drivers-server/src/main/resources/persistence.yaml
+          touch ./virtual-drivers-server/src/main/resources/cache.yaml
+          echo "${{ env.ENV_CACHE }}" > ./virtual-drivers-server/src/main/resources/cache.yaml
+          touch ./virtual-drivers-server/src/main/resources/api-client.yaml
+          echo "${{ env.ENV_API_CLIENT }}" > ./virtual-drivers-server/src/main/resources/api-client.yaml
+      - name: Set application.yaml
+        uses: actions/upload-artifact@v2
+        with:
+          name: application.yaml
+          path: |
+            ./virtual-drivers-server/src/main/resources/application.yaml
+            ./virtual-drivers-server/src/main/resources/persistence.yaml
+            ./virtual-drivers-server/src/main/resources/cache.yaml
+            ./virtual-drivers-server/src/main/resources/api-client.yaml
+      - run: touch ./virtual-drivers-server/src/main/resources/application.yaml
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:
@@ -42,3 +66,29 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }}
           context: ./virtual-drivers-server
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          key: ${{ secrets.AWS_EC2_PEM }}
+          username: ubuntu
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker image prune -af
+            docker pull ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }}
+
+            rm -f server.sh
+            touch server.sh
+
+            echo "docker kill virtual-drivers-server 2>/dev/null" >> server.sh
+            echo "docker rm virtual-drivers-server 2>/dev/null" >> server.sh
+            echo docker run --name virtual-drivers-server --rm -d -p 8080:8080 \
+              --log-driver=syslog \
+              ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }} >> server.sh
+
+            bash server.sh

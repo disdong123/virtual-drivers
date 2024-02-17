@@ -1,0 +1,30 @@
+server:
+  servlet:
+    # TODO thymeleaf
+    context-path: /api
+
+spring:
+  config:
+    import:
+      - persistence.yaml
+      - api-client.yaml
+      - cache.yaml
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+---
+spring.config.activate.on-profile: default local
+
+springdoc:
+  swagger-ui:
+    path: /docs
+---
+spring.config.activate.on-profile: dev
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+---
+spring.config.activate.on-profile: prod

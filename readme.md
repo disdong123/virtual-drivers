@@ -4,6 +4,8 @@
 
 ### Workflow
 
+길찾기 api 에서 반환되는 전체 위치 정보(위경도 좌표)를 임의의 차량 한 대와 매핑하여 저장하고, 주기적으로 전체 차량의 현재 위치를 클라이언트에게 전달합니다.
+
 실 주행 데이터가 없으므로 길찾기 api 에서 반환되는 위치 정보를 실시간 위치로 사용합니다.
 
 ```mermaid
@@ -29,7 +31,7 @@ flowchart TB
   RedisCache -.-|DTO| Redis
 ```
 
-## terraform
+## terraform 설정
 
 ### aws-vault 설정
 
@@ -43,10 +45,12 @@ flowchart TB
 ### 명령어
 
 ```
-avs exec disdong -- terraform plan
+avs exec disdong -- terraform -chdir=infra/terraform/app/prod plan
 ```
 
-### 참고
+## 참고
+
+### api
 
 - 주소검색
   - postcodify: https://www.poesis.org/postcodify/guide/jquery_plugin

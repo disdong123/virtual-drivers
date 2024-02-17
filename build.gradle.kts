@@ -26,6 +26,7 @@ subprojects {
     apply(plugin = libs.plugins.ktlint.get().pluginId)
 
     dependencies {
+        implementation(platform(libs.spring.cloud.dependencies))
         implementation(libs.kotlin.reflect)
         implementation(libs.kotlin.stdlib.jdk8)
         implementation(libs.jackson.module.kotlin)
@@ -35,12 +36,6 @@ subprojects {
         testImplementation(libs.spring.boot.starter.test)
         testImplementation(libs.mockito.kotlin)
         testImplementation(libs.fixture.monkey.starter.kotlin)
-    }
-
-    dependencyManagement {
-        imports {
-            mavenBom(libs.spring.cloud.dependencies.get().toString())
-        }
     }
 
     java.sourceCompatibility = JavaVersion.VERSION_19
@@ -71,6 +66,23 @@ subprojects {
 
 val prettier by tasks.registering(Exec::class) {
     commandLine("npx", "prettier", ".", "--write")
+}
+
+val secretFiles = listOf(
+    "ENV_SERVER" to "virtual-drivers-server/src/main/resources/application.yaml",
+    "ENV_PERSISTENCE" to "virtual-drivers-persistence/src/main/resources/persistence.yaml",
+    "ENV_CACHE" to "virtual-drivers-cache/src/main/resources/cache.yaml",
+    "ENV_API_CLIENT" to "virtual-drivers-api-client/src/main/resources/api-client.yaml",
+    "ENV_POSITION_HANDLER" to "internal/virtual-drivers-position-handler/src/main/resources/application.yaml",
+    // "AWS_EC2_PEM" to "infra/terraform/app/prod/virtual_drivers_server_keypair.pem"
+)
+
+val ghSecretSet = tasks.register("env") {
+    secretFiles.forEach { (secretName, filePath) ->
+        exec {
+            commandLine("bash", "-c", "gh secret set $secretName < ./$filePath")
+        }
+    }
 }
 
 tasks.getByName("ktlintFormat") {

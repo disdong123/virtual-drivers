@@ -1,6 +1,6 @@
 dependencies {
-    api(project(":virtual-drivers-persistence"))
-    api(project(":virtual-drivers-domain"))
+    implementation(project(":virtual-drivers-persistence"))
+    implementation(project(":virtual-drivers-domain"))
     implementation(project(":virtual-drivers-common"))
     implementation(project(":virtual-drivers-api-client"))
     implementation(project(":virtual-drivers-cache"))
