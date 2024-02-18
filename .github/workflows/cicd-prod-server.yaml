@@ -56,15 +56,15 @@ jobs:
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             docker image prune -af
-            docker pull ${{ secrets.DOCKERHUB_USER }}/virtual-drivers:${{ env.IMAGE_TAG }}
+            docker pull ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }}
 
             rm -f server.sh
             touch server.sh
 
-            echo "docker kill virtual-drivers 2>/dev/null" >> server.sh
-            echo "docker rm virtual-drivers 2>/dev/null" >> server.sh
-            echo docker run --name virtual-drivers --rm -d -p 80:8080 \
+            echo "docker kill virtual-drivers-server 2>/dev/null" >> server.sh
+            echo "docker rm virtual-drivers-server 2>/dev/null" >> server.sh
+            echo docker run --name virtual-drivers-server --rm -d -p 80:8080 \
               --log-driver=syslog \
-              ${{ secrets.DOCKERHUB_USER }}/virtual-drivers:${{ env.IMAGE_TAG }} >> server.sh
+              ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }} >> server.sh
 
             bash server.sh
