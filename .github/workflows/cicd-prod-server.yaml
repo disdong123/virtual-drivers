@@ -30,12 +30,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: application.yaml
-          path:
-            - ./virtual-drivers-server/src/main/resources/application.yaml
-            - ./virtual-drivers-persistence/src/main/resources/persistence.yaml
-            - ./virtual-drivers-cache/src/main/resources/cache.yaml
-            - ./virtual-drivers-api-client/src/main/resources/api-client.yaml
-            - ./internal/virtual-drivers-position-handler/src/main/resources/application.yaml
+          path: |
+            ./virtual-drivers-server/src/main/resources/application.yaml
+            ./virtual-drivers-persistence/src/main/resources/persistence.yaml
+            ./virtual-drivers-cache/src/main/resources/cache.yaml
+            ./virtual-drivers-api-client/src/main/resources/api-client.yaml
+            ./internal/virtual-drivers-position-handler/src/main/resources/application.yaml
       - run: touch ./virtual-drivers-server/src/main/resources/application.yaml
       - name: Set up JDK 19
         uses: actions/setup-java@v3
