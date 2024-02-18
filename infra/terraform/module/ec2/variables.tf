@@ -3,7 +3,7 @@ variable "instance_type" {
 }
 
 variable "ami" {
-  default = "ami-07eff2bc4837a9e01"
+  default = "ami-0f3a440bbcff3d043"
 }
 
 variable "name" {
@@ -17,3 +17,11 @@ variable "tag_creator" {
 variable "tag_env" {
   default = "prod"
 }
+
+variable "keypair_name" {}
+
+variable "user_data" {}
+
+variable "keypair_filename" {}
+
+variable "sg_name" {}

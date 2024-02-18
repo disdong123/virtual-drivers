@@ -42,3 +42,29 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }}
           context: ./virtual-drivers-server
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.AWS_EC2_HOST }}
+          key: ${{ secrets.AWS_EC2_PEM }}
+          username: ubuntu
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker image prune -af
+            docker pull ${{ secrets.DOCKERHUB_USER }}/virtual-drivers:${{ env.IMAGE_TAG }}
+
+            rm -f server.sh
+            touch server.sh
+
+            echo "docker kill virtual-drivers 2>/dev/null" >> server.sh
+            echo "docker rm virtual-drivers 2>/dev/null" >> server.sh
+            echo docker run --name virtual-drivers --rm -d -p 80:8080 \
+              --log-driver=syslog \
+              ${{ secrets.DOCKERHUB_USER }}/virtual-drivers:${{ env.IMAGE_TAG }} >> server.sh
+
+            bash server.sh

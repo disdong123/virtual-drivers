@@ -43,10 +43,10 @@ flowchart TB
 ### 명령어
 
 ```
-avs exec disdong -- terraform plan
+avs exec disdong -- terraform -chdir=infra/terraform/app/prod plan
 ```
 
-### 참고
+## 참고
 
 - 주소검색
   - postcodify: https://www.poesis.org/postcodify/guide/jquery_plugin
