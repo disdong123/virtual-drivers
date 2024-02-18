@@ -15,7 +15,7 @@ COPY ${JAR_FILE} app.jar
 RUN ["java", "-Djarmode=layertools", "-jar", "app.jar", "extract"]
 
 # runner
-FROM openjdk:17-jdk-slim-buster AS runner
+FROM openjdk:19-jdk-slim-buster AS runner
 
 #
 ARG WORK_DIR=/usr/bin/app
