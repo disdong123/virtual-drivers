@@ -18,27 +18,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-#      - name: Copy application.yaml
-#        run: |
-#          pwd
-#          touch ./virtual-drivers-server/src/main/resources/application.yaml
-#          echo "${{ secrets.ENV_SERVER }}" > ./virtual-drivers-server/src/main/resources/application.yaml
-#          touch ./virtual-drivers-persistence/src/main/resources/persistence.yaml
-#          echo "${{ secrets.ENV_PERSISTENCE }}" > ./virtual-drivers-persistence/src/main/resources/persistence.yaml
-#          touch ./virtual-drivers-cache/src/main/resources/cache.yaml
-#          echo "${{ secrets.ENV_CACHE }}" > ./virtual-drivers-cache/src/main/resources/cache.yaml
-#          touch ./virtual-drivers-api-client/src/main/resources/api-client.yaml
-#          echo "${{ secrets.ENV_API_CLIENT }}" > ./virtual-drivers-api-client/src/main/resources/api-client.yaml
-#          touch ./internal/virtual-drivers-position-handler/src/main/resources/application.yaml
-#          echo "${{ secrets.ENV_POSITION_HANDLER }}" > ./internal/virtual-drivers-position-handler/src/main/resources/application.yaml
-      - run: touch ./virtual-drivers-server/src/main/resources/application.yaml
-      - run: echo "${{ env.ENV_SERVER }}" > ./virtual-drivers-server/src/main/resources/application.yaml
-      - run: touch ./virtual-drivers-server/src/main/resources/persistence.yaml
-      - run: echo "${{ env.ENV_PERSISTENCE }}" > ./virtual-drivers-server/src/main/resources/persistence.yaml
-      - run: touch ./virtual-drivers-server/src/main/resources/cache.yaml
-      - run: echo "${{ env.ENV_CACHE }}" > ./virtual-drivers-server/src/main/resources/cache.yaml
-      - run: touch ./virtual-drivers-server/src/main/resources/api-client.yaml
-      - run: echo "${{ env.ENV_API_CLIENT }}" > ./virtual-drivers-server/src/main/resources/api-client.yaml
+      - name: Copy application.yaml
+        run: |
+          touch ./virtual-drivers-server/src/main/resources/application.yaml
+          echo "${{ secrets.ENV_SERVER }}" > ./virtual-drivers-server/src/main/resources/application.yaml
+          touch ./virtual-drivers-persistence/src/main/resources/persistence.yaml
+          echo "${{ secrets.ENV_PERSISTENCE }}" > ./virtual-drivers-persistence/src/main/resources/persistence.yaml
+          touch ./virtual-drivers-cache/src/main/resources/cache.yaml
+          echo "${{ secrets.ENV_CACHE }}" > ./virtual-drivers-cache/src/main/resources/cache.yaml
+          touch ./virtual-drivers-api-client/src/main/resources/api-client.yaml
+          echo "${{ secrets.ENV_API_CLIENT }}" > ./virtual-drivers-api-client/src/main/resources/api-client.yaml
       - name: Set application.yaml
         uses: actions/upload-artifact@v2
         with:
