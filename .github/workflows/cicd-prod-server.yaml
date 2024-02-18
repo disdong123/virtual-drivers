@@ -63,7 +63,7 @@ jobs:
 
             echo "docker kill virtual-drivers-server 2>/dev/null" >> server.sh
             echo "docker rm virtual-drivers-server 2>/dev/null" >> server.sh
-            echo docker run --name virtual-drivers-server --rm -d -p 80:8080 \
+            echo docker run --name virtual-drivers-server --rm -d -p 8080:8080 \
               --log-driver=syslog \
               ${{ secrets.DOCKERHUB_USER }}/virtual-drivers-server:${{ env.IMAGE_TAG }} >> server.sh
 

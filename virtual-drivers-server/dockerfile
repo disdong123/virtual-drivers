@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim-buster as Builder
+FROM openjdk:19-jdk-slim-buster as Builder
 
 ARG WORK_DIR=/usr/bin/app
 
