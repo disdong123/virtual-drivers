@@ -11,7 +11,8 @@ import kr.disdong.virtual.drivers.domain.module.car.repository.CarRepository
 import kr.disdong.virtual.drivers.domain.module.user.repository.UserRepository
 import kr.disdong.virtual.drivers.persistence.PersistenceApplication
 import kr.disdong.virtual.drivers.server.module.drivingdirection.service.DrivingDirectionService
-import org.springframework.beans.factory.InitializingBean
+import org.springframework.boot.ApplicationArguments
+import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
@@ -23,9 +24,9 @@ class ServerApplication(
     private val carRepository: CarRepository,
     private val drivingDirectionService: DrivingDirectionService,
     private val positionInfoCache: PositionInfoRedisCache,
-) : InitializingBean {
-    override fun afterPropertiesSet() {
-        println("afterPropertiesSet()")
+) : ApplicationRunner {
+    override fun run(args: ApplicationArguments?) {
+        println("run()")
         positionInfoCache.flushAll()
 
         if (carRepository.findAll().isNotEmpty()) {

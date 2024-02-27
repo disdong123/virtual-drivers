@@ -11,10 +11,9 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 class DefaultWebSocketConfig : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(config: MessageBrokerRegistry) {
         config.enableSimpleBroker()
-        // config.setApplicationDestinationPrefixes("/stomp")
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/virtual-drivers")
+        registry.addEndpoint("/stomp/v1/virtual-drivers")
     }
 }

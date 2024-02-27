@@ -1,9 +1,9 @@
 ### success case
-GET http://localhost:8080/api/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563
+GET http://localhost:8080/api/v1/driving-direction?startLongitude=126.9918&startLatitude=37.5519&goalLongitude=126.7052&goalLatitude=37.4563
 
 ### failure case
-GET http://localhost:8080/api/driving-direction?startLatitude=127.001&startLongitude=37.001&goalLatitude=127.001&goalLongitude=37.001
+GET http://localhost:8080/api/v1/driving-direction?startLatitude=127.001&startLongitude=37.001&goalLatitude=127.001&goalLongitude=37.001
 
 
 ### failure case (too long)
-GET http://localhost:8080/api/driving-direction?startLatitude=35.0577598&startLongitude=127.9611632&goalLatitude=35.0873476&goalLongitude=128.903168
+GET http://localhost:8080/api/v1/driving-direction?startLatitude=35.0577598&startLongitude=127.9611632&goalLatitude=35.0873476&goalLongitude=128.903168

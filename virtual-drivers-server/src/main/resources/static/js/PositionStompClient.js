@@ -2,7 +2,7 @@ class PositionStompClient {
   _stompClient;
   constructor(map, markers) {
     this._stompClient = new StompJs.Client({
-      brokerURL: 'ws://localhost:8080/api/virtual-drivers',
+      brokerURL: 'ws://localhost:8080/stomp/v1/virtual-drivers',
     });
 
     this._stompClient.onConnect = (frame) => {

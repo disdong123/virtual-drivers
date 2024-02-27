@@ -7,8 +7,8 @@ import kr.disdong.virtual.drivers.domain.module.drivingdirection.cache.PositionI
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.client.DrivingDirectionClient
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.model.DrivingDirection
 import kr.disdong.virtual.drivers.domain.module.drivingdirection.repository.DrivingDirectionRepository
-import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingDirectionRequest
-import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetDrivingDirectionResponse
+import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.DrivingDirectionRequest
+import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.DrivingDirectionResponse
 import kr.disdong.virtual.drivers.server.module.drivingdirection.exception.CarUnavailableException
 import org.springframework.stereotype.Service
 
@@ -20,7 +20,7 @@ class DrivingDirectionService(
     private val positionInfoCache: PositionInfoCache,
 ) {
     @Transactional
-    fun create(request: GetDrivingDirectionRequest): GetDrivingDirectionResponse {
+    fun create(request: DrivingDirectionRequest): DrivingDirectionResponse {
         val car = carRepository.findNoDrivingCar() ?: throw CarUnavailableException()
         val response = drivingDirectionClient.getDrivingDirection(request.toDrivingDirectionRequest())
         val drivingDirection = drivingDirectionRepository.save(response.toPlainDrivingDirection(request.startAddress, request.endAddress, car.id))
@@ -28,7 +28,7 @@ class DrivingDirectionService(
 
         positionInfoCache.add(PositionInfo(directionId = drivingDirection.id, endPosition = drivingDirectionRoutes.lastOrNull()?.subRoutes?.last() ?: response.endPosition))
 
-        return GetDrivingDirectionResponse.of(
+        return DrivingDirectionResponse.of(
             drivingDirection,
             drivingDirectionRoutes,
         )

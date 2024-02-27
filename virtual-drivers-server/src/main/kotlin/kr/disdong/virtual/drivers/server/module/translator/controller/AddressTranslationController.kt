@@ -6,14 +6,16 @@ import kr.disdong.virtual.drivers.server.module.drivingdirection.dto.GetPosition
 import kr.disdong.virtual.drivers.server.module.drivingdirection.helper.AddressTranslator
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/v1/translation")
 class AddressTranslationController(
     private val addressTranslator: AddressTranslator,
 ) {
 
-    @GetMapping("/translation/address")
+    @GetMapping("/address")
     fun getPositionByAddress(
         @ModelAttribute request: GetPositionByAddressRequest
     ): VdResponse<Position> {

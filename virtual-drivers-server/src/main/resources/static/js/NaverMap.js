@@ -9,7 +9,7 @@ class NaverMap {
 
   setCenterWithAddress = (address, type, markers) => {
     fetch(
-      `http://localhost:8080/api/translation/address?address=${address}&translationType=POSITION`,
+      `http://localhost:8080/api/v1/translation/address?address=${address}&translationType=POSITION`,
       {
         method: 'GET',
       },
@@ -60,7 +60,7 @@ class NaverMap {
 
   getDirection = (startPosition, endPosition) => {
     fetch(
-      `http://localhost:8080/api/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`,
+      `http://localhost:8080/api/v1/driving-direction?startAddress=${startPosition.address}&startLatitude=${startPosition.latitude}&startLongitude=${startPosition.longitude}&endAddress=${endPosition.address}&endLatitude=${endPosition.latitude}&endLongitude=${endPosition.longitude}`,
       {
         method: 'GET',
       },
